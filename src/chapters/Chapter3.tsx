@@ -136,6 +136,29 @@ export default function Chapter3({ progress, updateProgress }: Chapter3Props) {
     font-size: 16px;
 }`}
           />
+
+          <Quiz
+            questions={[
+              {
+                question: "What does CSS stand for?",
+                options: ["Computer Style Sheets", "Cascading Style Sheets", "Creative Style Syntax", "Colorful Style Software"],
+                correctAnswer: 1,
+                explanation: "CSS stands for Cascading Style Sheets - it's used to control the presentation and layout of HTML documents."
+              },
+              {
+                question: "Which part of a CSS rule selects the element to style?",
+                options: ["Property", "Value", "Selector", "Declaration"],
+                correctAnswer: 2,
+                explanation: "The selector is the part that points to the HTML element you want to style (e.g., p, .class, #id)."
+              },
+              {
+                question: "How do you include CSS directly in an HTML file?",
+                options: ["<css>", "<style>", "<script>", "<link>"],
+                correctAnswer: 1,
+                explanation: "The <style> tag is used to include CSS directly within an HTML document, typically in the <head> section."
+              }
+            ]}
+          />
         </div>
       )
     },

@@ -114,6 +114,29 @@ export default function Chapter2({ progress, updateProgress }: Chapter2Props) {
 </body>
 </html>`}
           />
+
+          <Quiz
+            questions={[
+              {
+                question: "What does HTML stand for?",
+                options: ["Hyper Text Markup Language", "High Tech Modern Language", "Home Tool Markup Language", "Hyperlinks and Text Markup Language"],
+                correctAnswer: 0,
+                explanation: "HTML stands for HyperText Markup Language - the standard language for creating web pages."
+              },
+              {
+                question: "Which tag is used to define the main content visible to users?",
+                options: ["<head>", "<meta>", "<body>", "<title>"],
+                correctAnswer: 2,
+                explanation: "The <body> tag contains all the visible content of the webpage including headings, paragraphs, images, etc."
+              },
+              {
+                question: "What is the correct HTML element for inserting a line break?",
+                options: ["<break>", "<lb>", "<br>", "<newline>"],
+                correctAnswer: 2,
+                explanation: "The <br> tag is a self-closing tag that inserts a single line break in HTML content."
+              }
+            ]}
+          />
         </div>
       )
     },
@@ -632,6 +655,34 @@ function greet(name) {
     <li>Enjoy!</li>
 </ol>`}
           />
+
+          <Quiz
+            questions={[
+              {
+                question: "Which tag is used to create an unordered (bulleted) list?",
+                options: ["<ol>", "<ul>", "<li>", "<list>"],
+                correctAnswer: 1,
+                explanation: "The <ul> tag creates an unordered list with bullet points, while <ol> creates an ordered/numbered list."
+              },
+              {
+                question: "What is the correct way to create a nested list in HTML?",
+                options: [
+                  "Put one <ul> inside another <ul>",
+                  "Use the <nested> tag",
+                  "Use the <list> tag with type='nested'",
+                  "Simply use more <li> elements"
+                ],
+                correctAnswer: 0,
+                explanation: "Nested lists are created by placing a <ul> or <ol> inside an <li> element of the parent list."
+              },
+              {
+                question: "Which HTML tag pair is used to create description list terms?",
+                options: ["<dd> and </dd>", "<dt> and </dt>", "<dl> and </dl>", "<li> and </li>"],
+                correctAnswer: 1,
+                explanation: "<dt> (description term) is used to define terms in a description list, while <dd> is used for the descriptions themselves."
+              }
+            ]}
+          />
         </div>
       )
     },
@@ -1022,6 +1073,34 @@ function greet(name) {
     <button type="submit">Login</button>
 </form>`}
           />
+
+          <Quiz
+            questions={[
+              {
+                question: "Which input type is used for single-select options where only one can be chosen?",
+                options: ["checkbox", "text", "radio", "select"],
+                correctAnswer: 2,
+                explanation: "Radio buttons (<input type='radio'>) are used when only one option can be selected from a group. Checkboxes allow multiple selections."
+              },
+              {
+                question: "What does the 'required' attribute do in a form input?",
+                options: [
+                  "Pre-fills the field with default data",
+                  "Makes the field mandatory before form submission",
+                  "Encrypts the input data",
+                  "Validates that the input contains only numbers"
+                ],
+                correctAnswer: 1,
+                explanation: "The 'required' attribute prevents form submission if the field is empty, ensuring users provide necessary information."
+              },
+              {
+                question: "Which element creates a multi-line text input area?",
+                options: ["<input type='textarea'>", "<textarea>", "<textbox>", "<input type='multiline'>"],
+                correctAnswer: 1,
+                explanation: "The <textarea> element creates a multi-line text input area that users can type multiple lines of text into."
+              }
+            ]}
+          />
         </div>
       )
     },
@@ -1385,6 +1464,34 @@ function greet(name) {
 <footer>
     <p>&copy; 2024 Your Company</p>
 </footer>`}
+          />
+
+          <Quiz
+            questions={[
+              {
+                question: "Which semantic element should be used for the main navigation links of a website?",
+                options: ["<div class='nav'>", "<navigation>", "<nav>", "<menu>"],
+                correctAnswer: 2,
+                explanation: "The <nav> element is specifically designed for navigation links and helps screen readers and search engines understand the site's navigation structure."
+              },
+              {
+                question: "What is the primary purpose of using semantic HTML elements?",
+                options: [
+                  "To make the page load faster",
+                  "To improve code readability for developers only",
+                  "To provide meaning and structure that browsers and assistive technologies can understand",
+                  "To reduce the number of HTML tags needed"
+                ],
+                correctAnswer: 2,
+                explanation: "Semantic HTML provides meaning to both browsers and developers, improving accessibility, SEO, and code maintainability."
+              },
+              {
+                question: "Which element is most appropriate for a blog post that could stand alone as independent content?",
+                options: ["<div class='post'>", "<section>", "<article>", "<main>"],
+                correctAnswer: 2,
+                explanation: "The <article> element is designed for self-contained content that could be independently distributed or reused, like blog posts, news articles, or forum posts."
+              }
+            ]}
           />
         </div>
       )

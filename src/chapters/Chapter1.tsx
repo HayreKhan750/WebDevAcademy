@@ -247,6 +247,39 @@ export default function Chapter1({ progress, updateProgress }: Chapter1Props) {
               </div>
             }
           />
+
+          <Quiz
+            questions={[
+              {
+                question: "Who invented the World Wide Web in 1991?",
+                options: ["Bill Gates", "Tim Berners-Lee", "Steve Jobs", "Vint Cerf"],
+                correctAnswer: 1,
+                explanation: "Tim Berners-Lee invented the World Wide Web in 1991, introducing hypertext to connect documents through hyperlinks."
+              },
+              {
+                question: "What is the main purpose of DNS in web browsing?",
+                options: [
+                  "To encrypt data between browser and server",
+                  "To translate domain names to IP addresses",
+                  "To store website files",
+                  "To manage user sessions"
+                ],
+                correctAnswer: 1,
+                explanation: "DNS (Domain Name System) acts like the internet's phonebook, translating human-readable domain names into IP addresses that computers use."
+              },
+              {
+                question: "In what order does a browser load a webpage?",
+                options: [
+                  "HTTP Request → DNS Lookup → Rendering → TCP Connection",
+                  "DNS Lookup → TCP Connection → HTTP Request → Rendering",
+                  "TCP Connection → HTTP Request → DNS Lookup → Rendering",
+                  "Rendering → HTTP Request → DNS Lookup → TCP Connection"
+                ],
+                correctAnswer: 1,
+                explanation: "The correct order is: DNS Lookup (resolve domain), TCP Connection (connect to server), HTTP Request (ask for page), then Rendering (display content)."
+              }
+            ]}
+          />
         </div>
       )
     },
@@ -321,6 +354,34 @@ export default function Chapter1({ progress, updateProgress }: Chapter1Props) {
                 </div>
               </div>
             }
+          />
+
+          <Quiz
+            questions={[
+              {
+                question: "Which layer of the TCP/IP model handles IP addresses and routing?",
+                options: ["Application Layer", "Transport Layer", "Internet Layer", "Network Interface Layer"],
+                correctAnswer: 2,
+                explanation: "The Internet Layer (equivalent to Network Layer in OSI) is responsible for IP addressing and routing packets across networks."
+              },
+              {
+                question: "What is the main difference between TCP and UDP?",
+                options: [
+                  "TCP is faster than UDP",
+                  "TCP guarantees delivery, UDP does not",
+                  "TCP is used for emails, UDP for websites",
+                  "There is no difference"
+                ],
+                correctAnswer: 1,
+                explanation: "TCP (Transmission Control Protocol) provides reliable, ordered delivery with error checking. UDP (User Datagram Protocol) is faster but doesn't guarantee delivery or order."
+              },
+              {
+                question: "Which HTTP protocol operates at the Application Layer of TCP/IP?",
+                options: ["IP", "TCP", "HTTP", "Ethernet"],
+                correctAnswer: 2,
+                explanation: "HTTP (Hypertext Transfer Protocol) operates at the Application Layer, along with other application protocols like FTP, SMTP, and DNS."
+              }
+            ]}
           />
         </div>
       )
@@ -511,6 +572,34 @@ console.log("Server: Apache/2.4"`}
               </div>
             }
           />
+
+          <Quiz
+            questions={[
+              {
+                question: "What does DNS stand for?",
+                options: [
+                  "Domain Network System",
+                  "Domain Name System",
+                  "Data Network Service",
+                  "Digital Name Server"
+                ],
+                correctAnswer: 1,
+                explanation: "DNS stands for Domain Name System - it acts as the phonebook of the internet, translating domain names to IP addresses."
+              },
+              {
+                question: "In the URL 'https://www.example.com:8080/path/page.html', what part represents the TLD (Top-Level Domain)?",
+                options: [".com", "www", "example", "8080"],
+                correctAnswer: 0,
+                explanation: "The TLD (Top-Level Domain) is '.com' - it represents the highest level in the domain name system hierarchy."
+              },
+              {
+                question: "What is the default port number for HTTP and HTTPS respectively?",
+                options: ["80, 443", "443, 80", "8080, 8443", "3000, 3001"],
+                correctAnswer: 0,
+                explanation: "HTTP uses port 80 by default, while HTTPS uses port 443. These well-known ports are reserved for web traffic."
+              }
+            ]}
+          />
         </div>
       )
     },
@@ -657,6 +746,39 @@ console.log("Server: Apache/2.4"`}
             question="Which model would be best for a personal blog with rarely changing content?"
             hint="Think about whether the content changes based on user input or stays the same for all visitors"
             solution="Model 1 - Static HTML Pages would be most efficient for a personal blog"
+          />
+
+          <Quiz
+            questions={[
+              {
+                question: "In the client-server model, what does the client typically do?",
+                options: [
+                  "Stores data and processes requests",
+                  "Makes requests and displays responses",
+                  "Manages network routing",
+                  "Handles DNS resolution"
+                ],
+                correctAnswer: 1,
+                explanation: "The client (typically a web browser) makes requests to servers and displays the responses to users."
+              },
+              {
+                question: "Which of the following is an example of server software?",
+                options: ["Chrome", "Firefox", "Apache", "Safari"],
+                correctAnswer: 2,
+                explanation: "Apache is a web server software that receives and responds to HTTP requests. Chrome, Firefox, and Safari are client browsers."
+              },
+              {
+                question: "What type of content is best suited for Model 1 (Static HTML Pages)?",
+                options: [
+                  "User-specific dashboards",
+                  "Real-time chat applications",
+                  "Content that rarely changes for all visitors",
+                  "E-commerce shopping carts"
+                ],
+                correctAnswer: 2,
+                explanation: "Static HTML pages are best for content that remains the same for all visitors and rarely changes, like documentation or simple blogs."
+              }
+            ]}
           />
         </div>
       )
