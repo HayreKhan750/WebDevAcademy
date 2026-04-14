@@ -136,6 +136,32 @@ button.addEventListener("mouseout", () => {
               }
             ]}
           />
+
+          <Exercise
+            question="Create a JavaScript program that: 1) Selects a div with id 'container', 2) Changes its background color to blue, 3) Creates a new paragraph element with text 'Hello DOM!', 4) Appends the paragraph to the container, 5) Adds a click event listener to the paragraph that removes it when clicked."
+            hint="Use document.createElement() to create elements, appendChild() to add them, and addEventListener() for events"
+            solution={`// Select the container
+const container = document.getElementById('container');
+
+// Change background color
+container.style.backgroundColor = 'blue';
+
+// Create a new paragraph
+const paragraph = document.createElement('p');
+paragraph.textContent = 'Hello DOM!';
+
+// Append to container
+container.appendChild(paragraph);
+
+// Add click event to remove the paragraph
+paragraph.addEventListener('click', function() {
+    this.remove(); // or container.removeChild(this)
+    console.log('Paragraph removed!');
+});
+
+// Alternative: using textContent vs innerHTML
+// paragraph.innerHTML = '<strong>Bold Text</strong>';`}
+          />
         </div>
       )
     },
@@ -262,6 +288,29 @@ button.addEventListener("click", function() {
     paragraph.style.color = "green";
 });`}
           />
+
+          <Quiz
+            questions={[
+              {
+                question: "Which method is recommended for attaching event handlers?",
+                options: ["HTML onclick attribute", "element.onclick", "addEventListener()", "attachEvent()"],
+                correctAnswer: 2,
+                explanation: "addEventListener() allows multiple handlers, better separation of concerns, and works with event delegation."
+              },
+              {
+                question: "What does event.preventDefault() do?",
+                options: ["Stops event propagation", "Prevents the default browser action", "Removes the event listener", "Cancels the event completely"],
+                correctAnswer: 1,
+                explanation: "preventDefault() stops the browser's default action (like form submission or link navigation)."
+              },
+              {
+                question: "What is event delegation?",
+                options: ["Attaching events to each child individually", "Attaching one event to parent to handle children", "Removing events from elements", "Creating new events"],
+                correctAnswer: 1,
+                explanation: "Event delegation uses the bubbling principle to handle events on multiple children with one parent listener."
+              }
+            ]}
+          />
         </div>
       )
     },
@@ -386,6 +435,54 @@ Counter.prototype.increment = function() {
               }
             ]}
           />
+
+          <Exercise
+            question="Create a bank account object using a constructor function with: owner name, account number, and balance. Add methods for deposit(), withdraw(), and getBalance(). Use Object.seal() to prevent adding new properties, then test the methods."
+            hint="Use 'this' keyword to reference object properties, and implement validation for withdrawals"
+            solution={`function BankAccount(owner, accountNumber, initialBalance) {
+    this.owner = owner;
+    this.accountNumber = accountNumber;
+    this.balance = initialBalance;
+    this.transactionHistory = [];
+
+    this.deposit = function(amount) {
+        if (amount > 0) {
+            this.balance += amount;
+            this.transactionHistory.push({ type: 'deposit', amount: amount, date: new Date() });
+            return \`Deposited: $\${amount}. New balance: $\${this.balance}\`;
+        }
+        return 'Invalid deposit amount';
+    };
+
+    this.withdraw = function(amount) {
+        if (amount > this.balance) {
+            return 'Insufficient funds';
+        }
+        if (amount > 0) {
+            this.balance -= amount;
+            this.transactionHistory.push({ type: 'withdrawal', amount: amount, date: new Date() });
+            return \`Withdrew: $\${amount}. New balance: $\${this.balance}\`;
+        }
+        return 'Invalid withdrawal amount';
+    };
+
+    this.getBalance = function() {
+        return \`Account \${this.accountNumber} - Balance: $\${this.balance}\`;
+    };
+
+    Object.seal(this);
+}
+
+const account = new BankAccount('John Doe', 'ACC-12345', 1000);
+console.log(account.getBalance());
+console.log(account.deposit(500));
+console.log(account.withdraw(200));
+console.log(account.getBalance());
+
+// Try to add new property (will fail with seal)
+account.email = 'john@email.com'; // Silently fails in non-strict mode
+console.log('Email property added?', account.hasOwnProperty('email'));`}
+          />
         </div>
       )
     },
@@ -479,6 +576,29 @@ console.log(result);  // "Hello **Alice**!"`}
 
 console.log(toTitleCase("john doe"));  // "John Doe"
 console.log(toTitleCase("JANE SMITH"));  // "Jane Smith"`}
+          />
+
+          <Quiz
+            questions={[
+              {
+                question: "Which method splits a string into an array?",
+                options: ["join()", "split()", "slice()", "concat()"],
+                correctAnswer: 1,
+                explanation: "split() divides a string into an array of substrings based on a separator."
+              },
+              {
+                question: "What does 'Hello'.includes('ell') return?",
+                options: ["true", "false", "undefined", "Error"],
+                correctAnswer: 0,
+                explanation: "includes() returns true if the string contains the specified substring."
+              },
+              {
+                question: "What is the difference between slice() and substring()?",
+                options: ["No difference", "slice() handles negative indices differently", "substring() can swap arguments", "slice() is faster"],
+                correctAnswer: 1,
+                explanation: "slice() allows negative indices (counting from end), while substring() treats negative as 0."
+              }
+            ]}
           />
         </div>
       )
@@ -694,6 +814,29 @@ console.log(passwordRegex.test("Pass123@"));     // true
 console.log(passwordRegex.test("password"));     // false (no uppercase, no digit, no special)
 console.log(passwordRegex.test("PASS123@"));     // false (no lowercase)
 console.log(passwordRegex.test("Pass@"));        // false (too short)`}
+          />
+
+          <Quiz
+            questions={[
+              {
+                question: "What does the regex pattern /^\\d+$/ match?",
+                options: ["Any text with digits", "One or more digits only", "A single digit", "Text starting with a digit"],
+                correctAnswer: 1,
+                explanation: "^\\d+$ matches strings that consist entirely of one or more digits (\\d+) from start (^) to end ($)."
+              },
+              {
+                question: "What is a lookahead assertion in regex?",
+                options: ["Looking ahead to the next character", "Checking a pattern without consuming characters", "Matching multiple patterns", "Skipping characters in the match"],
+                correctAnswer: 1,
+                explanation: "Lookahead (?=...) checks if a pattern exists ahead without including it in the match."
+              },
+              {
+                question: "Which flag makes a regex case-insensitive?",
+                options: ["g", "m", "i", "s"],
+                correctAnswer: 2,
+                explanation: "The 'i' flag makes the regex match regardless of case."
+              }
+            ]}
           />
         </div>
       )

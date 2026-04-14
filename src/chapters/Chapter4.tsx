@@ -217,6 +217,18 @@ console.log(typeof fruits);    // object (arrays are objects)`}
               }
             ]}
           />
+
+          <Exercise
+            question="Create a JavaScript program that declares variables for your name (const), your age (let), and whether you're a student (boolean). Then print all three values to the console with their data types."
+            hint="Use const for name (won't change), let for age (might change), and console.log() with typeof to check data types."
+            solution={`const name = "John Doe";
+let age = 25;
+let isStudent = true;
+
+console.log("Name:", name, "- Type:", typeof name);
+console.log("Age:", age, "- Type:", typeof age);
+console.log("Is Student:", isStudent, "- Type:", typeof isStudent);`}
+          />
         </div>
       )
     },
@@ -326,6 +338,29 @@ console.log("10 > 5:", 10 > 5);
 let number = -5;
 let result = number >= 0 ? "Positive" : "Negative";
 console.log("Number is:", result);`}
+          />
+
+          <Quiz
+            questions={[
+              {
+                question: "What is the result of 10 % 3?",
+                options: ["3.33", "3", "1", "0"],
+                correctAnswer: 2,
+                explanation: "The modulus operator (%) returns the remainder after division. 10 divided by 3 is 3 with a remainder of 1."
+              },
+              {
+                question: "Which operator checks for both value AND type equality?",
+                options: ["==", "===", "=", "!="],
+                correctAnswer: 1,
+                explanation: "=== (strict equality) checks both value and type, while == only checks value with type coercion."
+              },
+              {
+                question: "What does the ++ operator do?",
+                options: ["Decreases by 1", "Increases by 1", "Multiplies by 2", "Divides by 2"],
+                correctAnswer: 1,
+                explanation: "++ is the increment operator that increases a value by 1."
+              }
+            ]}
           />
         </div>
       )
@@ -461,6 +496,39 @@ console.log("Boolean([]):", Boolean([]));       // true`}
               }
             ]}
           />
+
+          <Exercise
+            question="Write a JavaScript program that takes a student's score (0-100) and returns their letter grade using these criteria: A (90-100), B (80-89), C (70-79), D (60-69), F (below 60). Test it with a score of 85."
+            hint="Use if...else if...else statements to check each grade range"
+            solution={`let score = 85;
+let grade;
+
+if (score >= 90) {
+    grade = "A";
+} else if (score >= 80) {
+    grade = "B";
+} else if (score >= 70) {
+    grade = "C";
+} else if (score >= 60) {
+    grade = "D";
+} else {
+    grade = "F";
+}
+
+console.log("Score:", score, "- Grade:", grade);
+
+// Bonus: Using switch with ranges
+let range = Math.floor(score / 10);
+switch (range) {
+    case 10:
+    case 9: grade = "A"; break;
+    case 8: grade = "B"; break;
+    case 7: grade = "C"; break;
+    case 6: grade = "D"; break;
+    default: grade = "F";
+}
+console.log("Using switch - Grade:", grade);`}
+          />
         </div>
       )
     },
@@ -590,6 +658,29 @@ for (let i = 2; i < 10; i++) {
     a = b;
     b = c;
 }`}
+          />
+
+          <Quiz
+            questions={[
+              {
+                question: "Which loop is best when you know the exact number of iterations?",
+                options: ["while", "do...while", "for", "for...of"],
+                correctAnswer: 2,
+                explanation: "The for loop is ideal when you know the exact number of iterations beforehand."
+              },
+              {
+                question: "What does the 'break' statement do in a loop?",
+                options: ["Skips the current iteration", "Exits the loop completely", "Pauses the loop", "Restarts the loop"],
+                correctAnswer: 1,
+                explanation: "break exits the loop entirely, while continue skips to the next iteration."
+              },
+              {
+                question: "Which loop type is best for iterating over array elements?",
+                options: ["while loop", "for loop", "for...of loop", "do...while loop"],
+                correctAnswer: 2,
+                explanation: "for...of provides clean syntax for iterating over iterable objects like arrays."
+              }
+            ]}
           />
         </div>
       )
@@ -743,6 +834,34 @@ console.log("Counter:", counter()); // 3`}
               }
             ]}
           />
+
+          <Exercise
+            question="Create a function called 'calculateBill' that takes three parameters: subtotal, taxRate, and tipPercentage. The function should calculate the total bill including tax and tip, and return it. Test it with: subtotal=100, taxRate=0.08, tipPercentage=0.20"
+            hint="Total = subtotal + (subtotal * taxRate) + (subtotal * tipPercentage)"
+            solution={`function calculateBill(subtotal, taxRate = 0.08, tipPercentage = 0.15) {
+    const tax = subtotal * taxRate;
+    const tip = subtotal * tipPercentage;
+    const total = subtotal + tax + tip;
+
+    return {
+        subtotal: subtotal,
+        tax: tax,
+        tip: tip,
+        total: total
+    };
+}
+
+// Test the function
+const bill = calculateBill(100, 0.08, 0.20);
+console.log("Subtotal: $", bill.subtotal);
+console.log("Tax (8%): $", bill.tax);
+console.log("Tip (20%): $", bill.tip);
+console.log("Total: $", bill.total);
+
+// Test with default tip
+const bill2 = calculateBill(50);
+console.log("\\nWith default values - Total: $", bill2.total);`}
+          />
         </div>
       )
     },
@@ -857,6 +976,29 @@ console.log("Copy:", copy);`}
             solution={`const scores = [85, 92, 78, 95, 88];
 const average = scores.reduce((sum, score) => sum + score, 0) / scores.length;
 console.log("Average score:", average);`}
+          />
+
+          <Quiz
+            questions={[
+              {
+                question: "Which method adds an element to the end of an array?",
+                options: ["unshift()", "push()", "pop()", "shift()"],
+                correctAnswer: 1,
+                explanation: "push() adds elements to the end of an array, while unshift() adds to the beginning."
+              },
+              {
+                question: "What does the map() method return?",
+                options: ["A single value", "A new array with transformed elements", "The original array modified", "undefined"],
+                correctAnswer: 1,
+                explanation: "map() creates a new array with the results of calling a function on every element."
+              },
+              {
+                question: "How do you access the third element of an array?",
+                options: ["array[2]", "array[3]", "array.third", "array.get(2)"],
+                correctAnswer: 0,
+                explanation: "Arrays are zero-indexed, so the third element is at index 2."
+              }
+            ]}
           />
         </div>
       )
@@ -1001,6 +1143,47 @@ console.log(dog.speak());`}
                 explanation: "Object.freeze() makes an object immutable - you cannot add, remove, or modify its properties."
               }
             ]}
+          />
+
+          <Exercise
+            question="Create a 'Book' object with properties: title, author, year, and pages. Add a method called 'getSummary' that returns a string like 'Title by Author (Year) - X pages'. Create two book instances and print their summaries."
+            hint="Use object literal syntax and define the method inside the object"
+            solution={`// Creating a Book object constructor
+function Book(title, author, year, pages) {
+    this.title = title;
+    this.author = author;
+    this.year = year;
+    this.pages = pages;
+
+    this.getSummary = function() {
+        return \`"\${this.title}" by \${this.author} (\${this.year}) - \${this.pages} pages\`;
+    };
+}
+
+// Create book instances
+const book1 = new Book("The Great Gatsby", "F. Scott Fitzgerald", 1925, 180);
+const book2 = new Book("1984", "George Orwell", 1949, 328);
+
+// Print summaries
+console.log(book1.getSummary());
+console.log(book2.getSummary());
+
+// Using class syntax (modern approach)
+class ModernBook {
+    constructor(title, author, year, pages) {
+        this.title = title;
+        this.author = author;
+        this.year = year;
+        this.pages = pages;
+    }
+
+    getSummary() {
+        return \`"\${this.title}" by \${this.author} (\${this.year}) - \${this.pages} pages\`;
+    }
+}
+
+const book3 = new ModernBook("To Kill a Mockingbird", "Harper Lee", 1960, 281);
+console.log(book3.getSummary());`}
           />
         </div>
       )
