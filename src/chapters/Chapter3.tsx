@@ -266,6 +266,61 @@ export default function Chapter3({ progress, updateProgress }: Chapter3Props) {
               }
             ]}
           />
+
+          <Exercise
+            question="Write CSS selectors for the following: 1) All paragraphs inside a div, 2) All buttons with class 'primary', 3) The element with id='submit', 4) The first child of any list"
+            hint="Use space for descendant, dot for class, hash for ID, and :first-child pseudo-class"
+            solution={`/* 1) All paragraphs inside a div */
+div p {
+    color: blue;
+}
+
+/* 2) All buttons with class 'primary' */
+button.primary {
+    background-color: #007bff;
+    color: white;
+}
+
+/* 3) The element with id='submit' */
+#submit {
+    font-weight: bold;
+    padding: 10px 20px;
+}
+
+/* 4) The first child of any list */
+li:first-child {
+    font-weight: bold;
+    color: red;
+}`}
+          />
+
+          <Exercise
+            question="Create CSS rules using pseudo-classes to: 1) Style links when hovered, 2) Style the first paragraph of an article, 3) Style every other row (zebra striping) in a table, 4) Style form inputs when focused"
+            hint="Use :hover, :first-of-type, :nth-child(even), and :focus pseudo-classes"
+            solution={`/* 1) Links on hover */
+a:hover {
+    color: #ff6600;
+    text-decoration: underline;
+}
+
+/* 2) First paragraph of an article */
+article p:first-of-type {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+/* 3) Zebra striping in tables */
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* 4) Form inputs when focused */
+input:focus, textarea:focus, select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    outline: none;
+}`}
+          />
         </div>
       )
     },
@@ -544,6 +599,105 @@ export default function Chapter3({ progress, updateProgress }: Chapter3Props) {
     border-radius: 4px;
 }`}
           />
+
+          <Quiz
+            questions={[
+              {
+                question: "What is the difference between display: inline and display: block?",
+                options: [
+                  "No difference",
+                  "inline stays in same line, block takes full width",
+                  "block is smaller than inline",
+                  "inline cannot have padding"
+                ],
+                correctAnswer: 1,
+                explanation: "Inline elements stay on the same line and only take needed width. Block elements start on a new line and take full width."
+              },
+              {
+                question: "What happens when an element has position: absolute?",
+                options: [
+                  "It stays in normal document flow",
+                  "It positions relative to the viewport",
+                  "It positions relative to nearest positioned ancestor",
+                  "It becomes fixed to the page"
+                ],
+                correctAnswer: 2,
+                explanation: "position: absolute positions the element relative to the nearest positioned (not static) ancestor element."
+              },
+              {
+                question: "What does z-index control?",
+                options: [
+                  "Horizontal position",
+                  "Vertical position",
+                  "Stack order of overlapping elements",
+                  "Element size"
+                ],
+                correctAnswer: 2,
+                explanation: "z-index controls the stacking order of elements. Higher values appear on top of lower values."
+              }
+            ]}
+          />
+
+          <Exercise
+            question="Create a fixed navigation bar that stays at the top of the page when scrolling. The navbar should have a height of 60px, dark background, white text, and be positioned at the top with z-index to stay above other content."
+            hint="Use position: fixed, top: 0, width: 100%, and z-index for layering"
+            solution={`.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-color: #333;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Add padding to body to prevent content from hiding under navbar */
+body {
+    padding-top: 60px;
+}`}
+          />
+
+          <Exercise
+            question="Create a card overlay effect where a dark semi-transparent overlay appears over an image when hovering. Use position: absolute and opacity transitions."
+            hint="Parent needs position: relative, overlay needs position: absolute with opacity 0, change to opacity 1 on hover"
+            solution={`.card {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    overflow: hidden;
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover .overlay {
+    opacity: 1;
+}`}
+          />
         </div>
       )
     },
@@ -685,6 +839,88 @@ export default function Chapter3({ progress, updateProgress }: Chapter3Props) {
               }
             ]}
           />
+
+          <Exercise
+            question="Create a horizontal navigation bar using flexbox. The navbar should have a logo on the left, navigation links in the center, and a login button on the right."
+            hint="Use display: flex, justify-content: space-between, and align-items: center on the container"
+            solution={`.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2c3e50;
+    padding: 15px 30px;
+    color: white;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #3498db;
+}
+
+.login-btn {
+    background-color: #3498db;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #2980b9;
+}`}
+          />
+
+          <Exercise
+            question="Create a responsive flexbox-based card layout where: cards are 300px wide, they wrap to new lines as needed, gaps between cards are 20px, and cards are vertically centered in the container."
+            hint="Use flex-wrap: wrap, gap, and justify-content with center alignment"
+            solution={`.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.card {
+    width: 300px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
+
+.card-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 20px;
+}`}
+          />
         </div>
       )
     },
@@ -799,6 +1035,59 @@ export default function Chapter3({ progress, updateProgress }: Chapter3Props) {
 }
 
 /* For responsive behavior that wraps automatically: */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}`}
+          />
+
+          <Quiz
+            questions={[
+              {
+                question: "What does 'fr' unit mean in CSS Grid?",
+                options: [
+                  "Fixed ratio",
+                  "Fraction of available space",
+                  "Full row",
+                  "Frame reference"
+                ],
+                correctAnswer: 1,
+                explanation: "fr stands for 'fraction unit' and represents a fraction of the available space in the grid container."
+              },
+              {
+                question: "How do you make a grid item span 2 columns?",
+                options: [
+                  "column-span: 2",
+                  "grid-column: span 2",
+                  "columns: 2",
+                  "grid-span: 2"
+                ],
+                correctAnswer: 1,
+                explanation: "grid-column: span 2 makes an item span across 2 columns in the grid."
+              }
+            ]}
+          />
+
+          <Exercise
+            question="Create a 3-column grid layout where the first column takes 2fr space, the middle takes 1fr, and the last takes 1fr. Add a gap of 20px between all items."
+            hint="Use grid-template-columns with fr units to create unequal column widths"
+            solution={`.grid-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 20px;
+}
+
+/* Each grid item styling */
+.grid-item {
+    background: #3498db;
+    color: white;
+    padding: 30px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+/* To make it responsive, use minmax: */
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -920,6 +1209,76 @@ export default function Chapter3({ progress, updateProgress }: Chapter3Props) {
     box-shadow: 0 6px 20px rgba(118, 75, 162, 0.6);
 }`}
           />
+
+          <Quiz
+            questions={[
+              {
+                question: "What does rgba(255, 0, 0, 0.5) represent?",
+                options: [
+                  "Red with 50% opacity",
+                  "Red with 50% brightness",
+                  "Green with 50% opacity",
+                  "Blue with 50% opacity"
+                ],
+                correctAnswer: 0,
+                explanation: "rgba stands for Red, Green, Blue, Alpha. The last value (0.5) represents opacity/transparency."
+              },
+              {
+                question: "What is the difference between linear-gradient and radial-gradient?",
+                options: [
+                  "No difference",
+                  "linear goes in one direction, radial spreads from center",
+                  "radial is faster",
+                  "linear is deprecated"
+                ],
+                correctAnswer: 1,
+                explanation: "linear-gradient creates a gradient in a specified direction (like left to right), while radial-gradient creates a circular gradient spreading from the center."
+              }
+            ]}
+          />
+
+          <Exercise
+            question="Create a card with a background image that covers the entire card, with a dark overlay for text readability."
+            hint="Use background-image, background-size: cover, and a pseudo-element or rgba overlay"
+            solution={`.card {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('image.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+.card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+.card-content {
+    position: relative;
+    z-index: 3;
+    color: white;
+    padding: 20px;
+}`}
+          />
         </div>
       )
     },
@@ -1032,6 +1391,60 @@ export default function Chapter3({ progress, updateProgress }: Chapter3Props) {
                 explanation: "line-height controls the space between lines of text, making paragraphs more readable."
               }
             ]}
+          />
+
+          <Exercise
+            question="Create a styled heading with: Google Font 'Roboto', font-size of 3rem, bold weight, text-shadow effect, and uppercase text with letter-spacing of 4px."
+            hint="Import Google Font in head, use font-family, font-size, font-weight, text-shadow, text-transform, and letter-spacing"
+            solution={`/* In HTML head */
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+
+/* CSS */
+.heading {
+    font-family: 'Roboto', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    color: #2c3e50;
+    text-align: center;
+}`}
+          />
+
+          <Exercise
+            question="Create a readable article layout with proper typography: body font-size of 18px with 1.6 line-height, paragraph text-align justified, first letter of first paragraph styled as drop cap, and hanging indents for blockquotes."
+            hint="Use line-height, text-align, ::first-letter pseudo-element, and padding/margin for blockquotes"
+            solution={`article {
+    max-width: 700px;
+    margin: 0 auto;
+    font-family: 'Georgia', serif;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+article p {
+    text-align: justify;
+    margin-bottom: 1em;
+}
+
+article p:first-of-type::first-letter {
+    font-size: 3em;
+    float: left;
+    line-height: 1;
+    padding-right: 8px;
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+blockquote {
+    margin: 1.5em 0;
+    padding: 1em 1.5em;
+    border-left: 4px solid #3498db;
+    background: #f9f9f9;
+    font-style: italic;
+    text-align: left;
+}`}
           />
         </div>
       )
@@ -1159,6 +1572,61 @@ export default function Chapter3({ progress, updateProgress }: Chapter3Props) {
                 explanation: "You need both @keyframes to define the animation stages AND the animation property to apply it."
               }
             ]}
+          />
+
+          <Exercise
+            question="Create a CSS animation called 'fadeIn' that fades an element from opacity 0 to opacity 1 over 1 second. Apply it to a div with class 'animated'."
+            hint="Define @keyframes with 0% and 100% states, then apply animation property"
+            solution={`@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animated {
+    animation: fadeIn 1s ease-out forwards;
+}
+
+/* Apply to multiple elements with delay */
+.animated.delay-1 {
+    animation-delay: 0.2s;
+}
+
+.animated.delay-2 {
+    animation-delay: 0.4s;
+}
+
+.animated.delay-3 {
+    animation-delay: 0.6s;
+}`}
+          />
+
+          <Exercise
+            question="Create a loading spinner animation using CSS. The spinner should be a circle that rotates 360 degrees continuously. Include different timing functions (linear vs ease-in-out)."
+            hint="Use border-radius: 50%, border styling for partial circle, and infinite animation"
+            solution={`.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Alternative with ease-in-out */
+.spinner-slow {
+    animation: spin 2s ease-in-out infinite;
+}`}
           />
         </div>
       )
@@ -1294,6 +1762,94 @@ export default function Chapter3({ progress, updateProgress }: Chapter3Props) {
 /* Desktop */
 @media (min-width: 992px) {
     .item { flex: 1 1 25%; }
+}`}
+          />
+
+          <Quiz
+            questions={[
+              {
+                question: "What does @media (max-width: 768px) target?",
+                options: [
+                  "All screens",
+                  "Screens 768px or wider",
+                  "Screens 768px or narrower",
+                  "Print devices only"
+                ],
+                correctAnswer: 2,
+                explanation: "max-width targets screens that are the specified width or narrower."
+              },
+              {
+                question: "What is the mobile-first approach?",
+                options: [
+                  "Designing for mobile first, then adding styles for larger screens",
+                  "Designing for desktop first, then mobile",
+                  "Only supporting mobile devices",
+                  "Using CSS frameworks"
+                ],
+                correctAnswer: 0,
+                explanation: "Mobile-first means writing base styles for mobile, then using min-width media queries to add styles for larger screens."
+              }
+            ]}
+          />
+
+          <Exercise
+            question="Create a complete responsive navigation that: shows a hamburger menu icon on mobile, displays full navigation on desktop (min-width: 768px), uses flexbox for layout, and includes smooth transitions for menu visibility."
+            hint="Use media queries to toggle display between none and flex, use z-index for layering"
+            solution={`.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #333;
+    padding: 15px;
+}
+
+.menu-toggle {
+    display: block;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+}
+
+.nav-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    background: #333;
+    padding: 20px;
+}
+
+.nav-links.active {
+    display: flex;
+}
+
+.nav-links a {
+    color: white;
+    padding: 10px 0;
+    border-bottom: 1px solid #444;
+}
+
+/* Desktop styles */
+@media (min-width: 768px) {
+    .menu-toggle {
+        display: none;
+    }
+
+    .nav-links {
+        display: flex;
+        flex-direction: row;
+        position: static;
+        width: auto;
+        gap: 20px;
+        padding: 0;
+    }
+
+    .nav-links a {
+        border: none;
+        padding: 0;
+    }
 }`}
           />
         </div>
@@ -1477,6 +2033,149 @@ export default function Chapter3({ progress, updateProgress }: Chapter3Props) {
                 explanation: "flex-wrap: wrap allows items to wrap, and flex: 1 1 300px makes cards grow/shrink but have a minimum width."
               }
             ]}
+          />
+
+          <Exercise
+            question="Build a complete profile card component that includes: a circular avatar image with border, name and job title with proper typography, a brief bio, social media icons that change color on hover, and a 'Contact Me' button with gradient and hover effect."
+            hint="Combine all CSS concepts: box-shadow, border-radius for circle, transitions for hover, flexbox for layout"
+            solution={`.profile-card {
+    width: 320px;
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.profile-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #667eea;
+    margin-bottom: 20px;
+}
+
+.name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.job-title {
+    color: #667eea;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.bio {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.social-icon:hover {
+    background: #667eea;
+    color: white;
+}
+
+.contact-btn {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.contact-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+}`}
+          />
+
+          <Exercise
+            question="Create a complete dashboard layout using CSS Grid with: a sidebar navigation (250px wide), main content area (flexible), and a top header (60px height). The layout should be responsive - sidebar becomes a top navigation on mobile."
+            hint="Use grid-template-columns, grid-template-rows, and media queries for responsiveness"
+            solution={`.dashboard {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: 60px 1fr;
+    min-height: 100vh;
+}
+
+.header {
+    grid-column: 1 / -1;
+    background: #2c3e50;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.sidebar {
+    background: #34495e;
+    color: white;
+    padding: 20px;
+}
+
+.main-content {
+    background: #ecf0f1;
+    padding: 30px;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+        grid-template-rows: 60px auto 1fr;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .mobile-nav {
+        display: flex;
+        background: #34495e;
+        padding: 10px 20px;
+        gap: 20px;
+    }
+
+    .mobile-nav a {
+        color: white;
+        text-decoration: none;
+    }
+}`}
           />
         </div>
       )

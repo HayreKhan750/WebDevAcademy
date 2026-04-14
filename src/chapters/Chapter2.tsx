@@ -240,6 +240,44 @@ function hello() {
               }
             ]}
           />
+
+          <Exercise
+            question="Create a webpage with an h1 heading 'My Portfolio', an h2 subheading 'About Me', and a paragraph that uses <strong> for important text, <em> for emphasis, <mark> to highlight 'web development', and <small> for copyright text."
+            hint="Use heading tags h1 and h2, paragraph tags, and inline formatting tags"
+            solution={`<!DOCTYPE html>
+<html>
+<head>
+    <title>My Portfolio</title>
+</head>
+<body>
+    <h1>My Portfolio</h1>
+    <h2>About Me</h2>
+    <p>
+        Hello! I am a <strong>passionate developer</strong> who loves
+        <em>creating amazing websites</em>. I specialize in
+        <mark>web development</mark> and continuously learning new technologies.
+        <br><br>
+        <small>&copy; 2024 My Portfolio. All rights reserved.</small>
+    </p>
+</body>
+</html>`}
+          />
+
+          <Exercise
+            question="Create a blockquote that contains a famous quote with <cite> for the author name, and a <pre> tag with a simple code snippet showing a function declaration."
+            hint="Blockquote requires <blockquote> and <cite> tags. Preformatted text uses <pre> tag to preserve whitespace."
+            solution={`<blockquote>
+    "The only way to do great work is to love what you do."
+    <cite>— Steve Jobs</cite>
+</blockquote>
+
+<pre>
+function greet(name) {
+    console.log("Hello, " + name + "!");
+    return true;
+}
+</pre>`}
+          />
         </div>
       )
     },
@@ -371,6 +409,117 @@ function hello() {
                 explanation: "target='_blank' opens the linked page in a new browser tab or window."
               }
             ]}
+          />
+
+          <Exercise
+            question="Create a webpage with two images: 1) One using a relative path (e.g., images/logo.png), 2) One using an absolute path (e.g., https://picsum.photos/300/200). Use alt, width, and height attributes for each image."
+            hint="Relative paths are relative to the current file location. Absolute paths include the full URL starting with http:// or https://"
+            solution={`<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Paths Practice</title>
+</head>
+<body>
+    <h1>Image Paths Practice</h1>
+
+    <h2>Relative Path Image</h2>
+    <img src="images/logo.png" alt="Website Logo" width="200" height="100">
+
+    <h2>Absolute Path Image</h2>
+    <img src="https://picsum.photos/300/200" alt="Random Beautiful Image" width="300" height="200">
+
+    <p>Note: The relative image won't load without the actual file, but the absolute URL will work!</p>
+</body>
+</html>`}
+          />
+
+          <Exercise
+            question="Create a world map image with an image map that has 3 clickable regions (North America, Europe, Asia). When clicked, each region should open a different webpage using target='_blank' for a new tab."
+            hint="Use the &lt;map&gt; and &lt;area&gt; tags. The area tag needs shape, coords, href, alt, and target attributes."
+            solution={`<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Map Practice</title>
+</head>
+<body>
+    <h1>World Map with Clickable Regions</h1>
+
+    <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Equirectangular_projection_SW.jpg"
+         alt="World Map"
+         usemap="#worldmap"
+         width="800" height="400"
+         style="border: 2px solid #333;">
+
+    <map name="worldmap">
+        <!-- North America -->
+        <area shape="rect"
+              coords="50,50,250,200"
+              href="https://en.wikipedia.org/wiki/North_America"
+              alt="North America"
+              target="_blank">
+
+        <!-- Europe -->
+        <area shape="rect"
+              coords="350,50,500,180"
+              href="https://en.wikipedia.org/wiki/Europe"
+              alt="Europe"
+              target="_blank">
+
+        <!-- Asia -->
+        <area shape="rect"
+              coords="500,50,750,250"
+              href="https://en.wikipedia.org/wiki/Asia"
+              alt="Asia"
+              target="_blank">
+    </map>
+
+    <p><em>Click on different regions of the map to learn more!</em></p>
+</body>
+</html>`}
+          />
+
+          <Exercise
+            question="Create two pages: page1.html and page2.html. In page1.html, create a link to page2.html using a relative path, and also create a link to a specific section (id='section2') on the same page."
+            hint="Internal links use # followed by the id. External file links use the filename directly for files in the same folder."
+            solution={`<!-- page1.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page 1</title>
+</head>
+<body>
+    <h1 id="top">Welcome to Page 1</h1>
+
+    <nav>
+        <a href="#section2">Go to Section 2 on this page</a> |
+        <a href="page2.html">Go to Page 2</a>
+    </nav>
+
+    <section id="section1">
+        <h2>Section 1</h2>
+        <p>This is section 1 content.</p>
+    </section>
+
+    <section id="section2">
+        <h2>Section 2</h2>
+        <p>This is section 2 content.</p>
+        <a href="#top">Back to top</a>
+    </section>
+</body>
+</html>
+
+<!-- page2.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page 2</title>
+</head>
+<body>
+    <h1>Welcome to Page 2</h1>
+    <p>This is a separate page linked from page1.html</p>
+    <a href="page1.html">Back to Page 1</a>
+</body>
+</html>`}
           />
         </div>
       )
@@ -611,6 +760,133 @@ function hello() {
                 explanation: "colspan merges cells horizontally, while rowspan merges them vertically."
               }
             ]}
+          />
+
+          <Exercise
+            question="Create an HTML table for a product catalog with columns: Product Name, Price, Stock Status. Include at least 4 products with realistic data. Use proper semantic table structure with thead and tbody."
+            hint="Use table, thead, tbody, tr, th, and td tags. Add styling with CSS for better presentation."
+            solution={`<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Catalog</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #4CAF50; color: white; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        tr:hover { background-color: #ddd; }
+        .in-stock { color: green; font-weight: bold; }
+        .out-of-stock { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Product Catalog</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Stock Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Wireless Mouse</td>
+                <td>$29.99</td>
+                <td class="in-stock">In Stock</td>
+            </tr>
+            <tr>
+                <td>Mechanical Keyboard</td>
+                <td>$89.99</td>
+                <td class="in-stock">In Stock</td>
+            </tr>
+            <tr>
+                <td>USB-C Hub</td>
+                <td>$45.00</td>
+                <td class="out-of-stock">Out of Stock</td>
+            </tr>
+            <tr>
+                <td>Webcam HD</td>
+                <td>$79.99</td>
+                <td class="in-stock">In Stock</td>
+            </tr>
+            <tr>
+                <td>Monitor Stand</td>
+                <td>$35.50</td>
+                <td class="out-of-stock">Out of Stock</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>`}
+          />
+
+          <Exercise
+            question="Create a class timetable using HTML tables with colspan and rowspan. The table should have time slots as rows and days of the week as columns. Merge cells where a class spans multiple periods."
+            hint="Use colspan to merge horizontal cells and rowspan to merge vertical cells"
+            solution={`<!DOCTYPE html>
+<html>
+<head>
+    <title>Class Timetable</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #333; padding: 15px; text-align: center; }
+        th { background-color: #2196F3; color: white; }
+        td { background-color: #f9f9f9; }
+        .math { background-color: #FFECB3; }
+        .science { background-color: #C8E6C9; }
+        .english { background-color: #BBDEFB; }
+        .break { background-color: #E1BEE7; }
+        .lunch { background-color: #FFCDD2; }
+    </style>
+</head>
+<body>
+    <h1>Weekly Class Timetable</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>8:00 - 9:00</td>
+                <td class="math" colspan="2">Mathematics</td>
+                <td class="english" colspan="2">English</td>
+                <td class="science">Science</td>
+            </tr>
+            <tr>
+                <td>9:00 - 10:00</td>
+                <td class="break" colspan="5">Short Break</td>
+            </tr>
+            <tr>
+                <td>10:00 - 11:00</td>
+                <td class="science">Science</td>
+                <td class="english">English</td>
+                <td class="math">Mathematics</td>
+                <td class="science">Science</td>
+                <td class="english">English</td>
+            </tr>
+            <tr>
+                <td>11:00 - 12:00</td>
+                <td class="english">English</td>
+                <td class="science" colspan="2">Science Lab</td>
+                <td class="math">Mathematics</td>
+                <td class="math">Mathematics</td>
+            </tr>
+            <tr>
+                <td>12:00 - 1:00</td>
+                <td class="lunch" colspan="5">Lunch Break</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>`}
           />
         </div>
       )
@@ -856,6 +1132,115 @@ function hello() {
                 explanation: "<iframe> is used to embed external content like YouTube videos, Google Maps, or other web pages."
               }
             ]}
+          />
+
+          <Exercise
+            question="Create an HTML page with an embedded YouTube video using iframe. The video should have a width of 560px and height of 315px. Also add a fallback message for browsers that don't support iframes."
+            hint="Use iframe with src pointing to a YouTube embed URL, and include width, height, and frameborder attributes"
+            solution={`<!DOCTYPE html>
+<html>
+<head>
+    <title>Embedded YouTube Video</title>
+</head>
+<body>
+    <h1>Learning Web Development</h1>
+
+    <h2>Introduction to HTML5</h2>
+
+    <div class="video-container">
+        <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/qz0aGYrrwhU"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+            Your browser does not support iframe.
+        </iframe>
+    </div>
+
+    <p><em>Watch this video to learn the basics of HTML5!</em></p>
+</body>
+</html>`}
+          />
+
+          <Exercise
+            question="Create an audio player page that uses the HTML5 audio element. Include multiple source formats for browser compatibility (mp3, ogg, wav). Add attributes like controls, autoplay (commented out), loop, and muted."
+            hint="Use the audio tag with multiple source elements inside it. The browser will use the first format it supports."
+            solution={`<!DOCTYPE html>
+<html>
+<head>
+    <title>Audio Player</title>
+</head>
+<body>
+    <h1>Music Player</h1>
+
+    <h2>Relaxing Music</h2>
+
+    <audio controls loop muted>
+        <source src="music.mp3" type="audio/mpeg">
+        <source src="music.ogg" type="audio/ogg">
+        <source src="music.wav" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio>
+
+    <h2>Audio Features</h2>
+    <ul>
+        <li><strong>controls</strong> - Shows play, pause, volume buttons</li>
+        <li><strong>loop</strong> - Repeats the audio continuously</li>
+        <li><strong>autoplay</strong> - Starts playing automatically (currently disabled)</li>
+        <li><strong>muted</strong> - Starts muted (remove for sound)</li>
+    </ul>
+
+    <p><em>Note: You need actual audio files for this to work!</em></p>
+</body>
+</html>`}
+          />
+
+          <Exercise
+            question="Create a video gallery page with two video elements. First video should autoplay and be muted. Second video should have a poster image and play controls. Include width and height for both."
+            hint="Use video tag with autoplay, muted, controls attributes. Poster attribute shows an image before the video loads."
+            solution={`<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Gallery</title>
+    <style>
+        .video-wrapper {
+            display: inline-block;
+            margin: 20px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+        h1 { text-align: center; }
+        h3 { text-align: center; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Video Gallery</h1>
+
+    <div class="video-wrapper">
+        <h3>Autoplay Video (Muted)</h3>
+        <video width="400" autoplay muted loop>
+            <source src="background.mp4" type="video/mp4">
+            <source src="background.webm" type="video/webm">
+            Your browser does not support the video tag.
+        </video>
+        <p><small>This video autoplays with sound muted</small></p>
+    </div>
+
+    <div class="video-wrapper">
+        <h3>Interactive Video</h3>
+        <video width="400" controls poster="https://picsum.photos/400/225">
+            <source src="presentation.mp4" type="video/mp4">
+            <source src="presentation.webm" type="video/webm">
+            Your browser does not support the video tag.
+        </video>
+        <p><small>Click play to start the video</small></p>
+    </div>
+</body>
+</html>`}
           />
         </div>
       )
