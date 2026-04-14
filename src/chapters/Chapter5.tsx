@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Palette, Box, Layout, Grid, Zap, Play, MousePointer, Layers, Square, Circle, Type, Image, CheckCircle, ChevronRight, ChevronDown, Monitor } from 'lucide-react';
+import { Zap, MousePointer, Code2, FileText, CalendarClock, Regex, Cookie, CheckCircle, ChevronRight, ChevronDown, Braces, Globe, Box, Smartphone } from 'lucide-react';
 import InteractiveCodeEditor from '../components/InteractiveCodeEditor';
 import VisualDemo from '../components/VisualDemo';
 import Exercise from '../components/Exercise';
@@ -20,370 +20,119 @@ interface Topic {
 }
 
 export default function Chapter5({ progress, updateProgress }: Chapter5Props) {
-  const [expandedTopic, setExpandedTopic] = useState<string | null>('css-intro');
+  const [expandedTopic, setExpandedTopic] = useState<string | null>('advjs-dom');
 
   const markComplete = (topicId: string) => {
     updateProgress('chapter5', topicId, true);
   };
 
   const topics: Record<string, Topic> = {
-    'css-intro': {
-      id: 'css-intro',
-      title: 'Introduction to CSS',
-      icon: <Palette className="w-5 h-5" />,
-      content: (
-        <div className="space-y-6">
-          <div className="prose dark:prose-invert max-w-none">
-            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">What is CSS?</h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
-              <strong>CSS (Cascading Style Sheets)</strong> is a stylesheet language used to describe the presentation of a document written in HTML. CSS describes how elements should be rendered on screen, on paper, in speech, or on other media.
-            </p>
-
-            <div className="bg-gradient-to-r from-pink-500 to-purple-500 rounded-xl p-6 text-white mb-6">
-              <h4 className="font-bold mb-2">Why Learn CSS?</h4>
-              <ul className="space-y-2 text-white/90">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                  <span>Control the visual design of web pages</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                  <span>Separate content from presentation</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                  <span>Create responsive, mobile-friendly designs</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                  <span>Enable animations and interactive effects</span>
-                </li>
-              </ul>
-            </div>
-
-            <h4 className="text-xl font-bold text-gray-800 dark:text-white mb-3">CSS Syntax</h4>
-            <div className="bg-gray-100 dark:bg-gray-800 rounded-xl p-4 font-mono text-sm mb-6">
-              <p className="text-blue-600 dark:text-blue-400">/* Selector */</p>
-              <p className="text-purple-600 dark:text-purple-400">h1 <span className="text-gray-500">{'{'}</span></p>
-              <p className="ml-4 text-green-600 dark:text-green-400">color: <span className="text-orange-500">blue</span>;</p>
-              <p className="ml-4 text-green-600 dark:text-green-400">font-size: <span className="text-orange-500">24px</span>;</p>
-              <p className="ml-4 text-green-600 dark:text-green-400">text-align: <span className="text-orange-500">center</span>;</p>
-              <p className="text-gray-500">{'}'}</p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {[
-                { part: 'Selector', desc: 'Points to the HTML element you want to style', color: 'blue' },
-                { part: 'Property', desc: 'The attribute you want to change', color: 'green' },
-                { part: 'Value', desc: 'The new value for the property', color: 'orange' }
-              ].map((item, i) => (
-                <div key={i} className={`bg-${item.color}-50 dark:bg-${item.color}-900/20 border border-${item.color}-200 dark:border-${item.color}-800 rounded-xl p-4 text-center`}>
-                  <p className={`font-bold text-${item.color}-800 dark:text-${item.color}-200 mb-2`}>{item.part}</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <InteractiveCodeEditor
-            title="Your First CSS"
-            language="html"
-            initialCode={`<!DOCTYPE html>
-<html>
-<head>
-    <title>CSS Basics</title>
-    <style>
-        /* Change the background color */
-        body {
-            background-color: #f0f0f0;
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-
-        /* Style the heading */
-        h1 {
-            color: #333;
-            text-align: center;
-        }
-
-        /* Style paragraphs */
-        p {
-            color: #666;
-            line-height: 1.6;
-            font-size: 18px;
-        }
-
-        /* Style with class */
-        .highlight {
-            background-color: yellow;
-            padding: 10px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Welcome to CSS!</h1>
-    <p>This is a normal paragraph.</p>
-    <p class="highlight">This paragraph has a yellow highlight!</p>
-</body>
-</html>`}
-          />
-        </div>
-      )
-    },
-
-    'css-selectors': {
-      id: 'css-selectors',
-      title: 'CSS Selectors',
-      icon: <MousePointer className="w-5 h-5" />,
-      content: (
-        <div className="space-y-6">
-          <div className="prose dark:prose-invert max-w-none">
-            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">CSS Selectors</h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
-              <strong>Selectors</strong> are patterns used to select the element(s) you want to style. CSS selectors can select elements based on their tag name, class, id, attributes, and more.
-            </p>
-
-            <h4 className="text-xl font-bold text-gray-800 dark:text-white mb-3">Basic Selectors</h4>
-            <div className="space-y-3 mb-6">
-              {[
-                { selector: 'element', example: 'p { }', desc: 'Selects all paragraph elements' },
-                { selector: '.class', example: '.highlight { }', desc: 'Selects elements with class="highlight"' },
-                { selector: '#id', example: '#header { }', desc: 'Selects the element with id="header"' },
-                { selector: '*', example: '* { }', desc: 'Selects all elements' }
-              ].map((item, i) => (
-                <div key={i} className="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-4 flex items-center gap-4">
-                  <code className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded font-mono">{item.selector}</code>
-                  <code className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded font-mono">{item.example}</code>
-                  <span className="text-gray-600 dark:text-gray-400 flex-1">{item.desc}</span>
-                </div>
-              ))}
-            </div>
-
-            <h4 className="text-xl font-bold text-gray-800 dark:text-white mb-3">Combinators</h4>
-            <div className="space-y-3 mb-6">
-              {[
-                { selector: 'A B', example: 'div p { }', desc: 'Descendant selector - p inside div' },
-                { selector: 'A > B', example: 'div > p { }', desc: 'Child selector - direct child of div' },
-                { selector: 'A + B', example: 'h1 + p { }', desc: 'Adjacent sibling - p right after h1' },
-                { selector: 'A ~ B', example: 'h1 ~ p { }', desc: 'General sibling - all p after h1' }
-              ].map((item, i) => (
-                <div key={i} className="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-4 flex items-center gap-4">
-                  <code className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded font-mono">{item.selector}</code>
-                  <code className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded font-mono">{item.example}</code>
-                  <span className="text-gray-600 dark:text-gray-400 flex-1">{item.desc}</span>
-                </div>
-              ))}
-            </div>
-
-            <h4 className="text-xl font-bold text-gray-800 dark:text-white mb-3">Attribute Selectors</h4>
-            <div className="space-y-3 mb-6">
-              {[
-                { selector: '[attr]', example: '[disabled] { }', desc: 'Elements with the attribute' },
-                { selector: '[attr=value]', example: '[type="text"] { }', desc: 'Exact match' },
-                { selector: '[attr~=value]', example: '[class~="highlight"] { }', desc: 'Contains word' },
-                { selector: '[attr^=value]', example: '[href^="https"] { }', desc: 'Starts with' },
-                { selector: '[attr$=value]', example: '[src$=".png"] { }', desc: 'Ends with' }
-              ].map((item, i) => (
-                <div key={i} className="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-4 flex items-center gap-4">
-                  <code className="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded font-mono">{item.selector}</code>
-                  <span className="text-gray-600 dark:text-gray-400 flex-1">{item.desc}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <InteractiveCodeEditor
-            title="Practice CSS Selectors"
-            language="html"
-            initialCode={`<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        /* Element selector */
-        p { color: blue; }
-
-        /* Class selector */
-        .highlight { background: yellow; }
-
-        /* ID selector */
-        #special { border: 2px solid red; }
-
-        /* Descendant selector */
-        .container p { font-weight: bold; }
-
-        /* Pseudo-class */
-        a:hover { color: green; text-decoration: underline; }
-
-        /* Multiple classes */
-        .btn.primary { background: blue; color: white; }
-    </style>
-</head>
-<body>
-    <h1 id="special">CSS Selectors Practice</h1>
-    <div class="container">
-        <p>I'm bold because I'm inside .container</p>
-        <p>Me too!</p>
-    </div>
-    <p>I'm just a normal paragraph</p>
-    <p class="highlight">I'm highlighted!</p>
-    <a href="#">Hover over me!</a>
-    <button class="btn primary">Primary Button</button>
-</body>
-</html>`}
-          />
-
-          <Quiz
-            questions={[
-              {
-                question: "Which selector targets an element with id='main'?",
-                options: [".main", "#main", "element.main", "*main"],
-                correctAnswer: 1,
-                explanation: "The # symbol is used for ID selectors in CSS."
-              },
-              {
-                question: "What does the descendant selector (A B) do?",
-                options: [
-                  "Selects B that is a direct child of A",
-                  "Selects B that is anywhere inside A",
-                  "Selects A and B",
-                  "Selects A only if it has B"
-                ],
-                correctAnswer: 1,
-                explanation: "The descendant selector (space) selects all B elements that are nested anywhere inside A."
-              }
-            ]}
-          />
-        </div>
-      )
-    },
-
-    'css-box-model': {
-      id: 'css-box-model',
-      title: 'CSS Box Model',
+    'advjs-dom': {
+      id: 'advjs-dom',
+      title: 'DOM Manipulation',
       icon: <Box className="w-5 h-5" />,
       content: (
         <div className="space-y-6">
           <div className="prose dark:prose-invert max-w-none">
-            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">Understanding the Box Model</h3>
+            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">The Document Object Model (DOM)</h3>
             <p className="text-gray-600 dark:text-gray-400 mb-4">
-              Every element in HTML is treated as a box. The <strong>CSS Box Model</strong> consists of: content, padding, border, and margin. These properties control the space around and within an element.
+              The DOM is a programming interface for web documents. It represents the page so that programs can change the document structure, style, and content. JavaScript can manipulate the DOM to create dynamic, interactive web pages.
             </p>
 
-            <VisualDemo
-              type="diagram"
-              title="CSS Box Model Visualization"
-              description="See how each part of the box model works"
-              content={
-                <div className="bg-yellow-100 dark:bg-yellow-900/30 rounded-xl p-8 max-w-md mx-auto">
-                  <p className="text-center text-sm text-yellow-700 dark:text-yellow-300 mb-4">Margin (outside)</p>
-                  <div className="bg-orange-100 dark:bg-orange-900/30 rounded-lg p-1">
-                    <p className="text-center text-sm text-orange-700 dark:text-orange-300">Border</p>
-                    <div className="bg-green-100 dark:bg-green-900/30 rounded p-1">
-                      <p className="text-center text-sm text-green-700 dark:text-green-300">Padding</p>
-                      <div className="bg-blue-100 dark:bg-blue-900/30 rounded p-6 text-center">
-                        <p className="font-bold text-blue-800 dark:text-blue-200">Content</p>
-                        <p className="text-xs text-blue-600 dark:text-blue-400">width × height</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              }
-            />
-
-            <h4 className="text-xl font-bold text-gray-800 dark:text-white mb-3 mt-6">Box Model Properties</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-              {[
-                { prop: 'content', desc: 'The actual content area', example: 'text, images, etc.' },
-                { prop: 'padding', desc: 'Space inside the border', example: 'padding: 20px;' },
-                { prop: 'border', desc: 'Line around padding', example: 'border: 2px solid black;' },
-                { prop: 'margin', desc: 'Space outside the border', example: 'margin: 10px auto;' }
-              ].map((item, i) => (
-                <div key={i} className="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-4">
-                  <p className="font-bold text-purple-600 dark:text-purple-400 mb-1">{item.prop}</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{item.desc}</p>
-                  <code className="text-xs bg-blue-100 dark:bg-blue-900/30 px-2 py-1 rounded">{item.example}</code>
-                </div>
-              ))}
+            <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl p-6 text-white mb-6">
+              <h4 className="font-bold mb-3">DOM Tree Structure</h4>
+              <div className="bg-white/20 rounded-lg p-4 font-mono text-sm">
+                <p>document</p>
+                <p className="ml-4">└── html</p>
+                <p className="ml-8">├── head</p>
+                <p className="ml-8">│   ├── title</p>
+                <p className="ml-8">│   └── meta</p>
+                <p className="ml-8">└── body</p>
+                <p className="ml-12">├── header</p>
+                <p className="ml-12">├── main</p>
+                <p className="ml-12">└── footer</p>
+              </div>
             </div>
 
-            <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6 mb-6">
-              <h4 className="font-bold text-blue-800 dark:text-blue-200 mb-3">Box-Sizing: Border-Box</h4>
-              <p className="text-blue-700 dark:text-blue-300 mb-3">
-                By default, width/height only applies to content. Use <code>box-sizing: border-box</code> to include padding and border in the total width/height!
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-white dark:bg-gray-800 rounded-lg p-4">
-                  <p className="font-bold mb-2">Without border-box:</p>
-                  <p className="text-sm text-gray-600">width: 100px + 20px padding + 4px border = 124px total</p>
+            <h4 className="text-xl font-bold text-gray-800 dark:text-white mb-3">Selecting Elements</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              {[
+                { method: 'getElementById()', desc: 'Select by ID', icon: '#' },
+                { method: 'getElementsByClassName()', desc: 'Select by class', icon: '.' },
+                { method: 'getElementsByTagName()', desc: 'Select by tag', icon: '<>' },
+                { method: 'querySelector()', desc: 'First match CSS selector', icon: '⚡' },
+                { method: 'querySelectorAll()', desc: 'All matches CSS selector', icon: '⚡⚡' }
+              ].map((item, i) => (
+                <div key={i} className="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-4 flex items-start gap-3">
+                  <span className="text-2xl font-mono text-purple-600">{item.icon}</span>
+                  <div>
+                    <code className="font-mono text-purple-600 text-sm">{item.method}</code>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{item.desc}</p>
+                  </div>
                 </div>
-                <div className="bg-white dark:bg-gray-800 rounded-lg p-4">
-                  <p className="font-bold mb-2">With border-box:</p>
-                  <p className="text-sm text-gray-600">width: 100px (includes padding + border) = 100px total</p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
           <InteractiveCodeEditor
-            title="Box Model Demo"
-            language="html"
-            initialCode={`<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        .box {
-            width: 200px;
-            height: 100px;
-            background-color: #3498db;
-            color: white;
-            padding: 20px;
-            border: 5px solid #2c3e50;
-            margin: 30px;
-        }
+            title="DOM Manipulation Demo"
+            language="javascript"
+            initialCode={`// Selecting Elements
+const title = document.getElementById("title");
+const items = document.getElementsByClassName("item");
+const paragraphs = document.getElementsByTagName("p");
+const firstButton = document.querySelector("button");
+const allButtons = document.querySelectorAll("button");
 
-        .box-content {
-            box-sizing: border-box;
-            width: 200px;
-            height: 100px;
-            background-color: #e74c3c;
-            color: white;
-            padding: 20px;
-            border: 5px solid #c0392b;
-            margin: 30px;
-        }
-    </style>
-</head>
-<body>
-    <h3>Without box-sizing: border-box</h3>
-    <div class="box">I'm a box with content + padding + border</div>
+// Changing Content
+title.textContent = "New Title";
+title.innerHTML = "<span>HTML Content</span>";
 
-    <h3>With box-sizing: border-box</h3>
-    <div class="box-content">I'm the same size but border-box!</div>
+// Changing Styles
+title.style.color = "blue";
+title.style.fontSize = "24px";
+title.classList.add("active");
+title.classList.remove("hidden");
+title.classList.toggle("highlight");
 
-    <p>Notice: The red box (border-box) stays at exactly 200px wide,
-    while the blue box is actually wider due to padding and border.</p>
-</body>
-</html>`}
+// Creating Elements
+const newDiv = document.createElement("div");
+newDiv.textContent = "I'm a new div!";
+newDiv.className = "container";
+document.body.appendChild(newDiv);
+
+// Removing Elements
+const toRemove = document.querySelector(".obsolete");
+toRemove.remove();
+
+// Event Handling
+const button = document.querySelector("#myButton");
+button.addEventListener("click", function() {
+    alert("Button clicked!");
+});
+
+button.addEventListener("mouseover", () => {
+    button.style.backgroundColor = "red";
+});
+
+button.addEventListener("mouseout", () => {
+    button.style.backgroundColor = "blue";
+});`}
           />
 
           <Quiz
             questions={[
               {
-                question: "What does margin control?",
-                options: [
-                  "Space inside the element",
-                  "Space between elements",
-                  "The border width",
-                  "The content size"
-                ],
-                correctAnswer: 1,
-                explanation: "Margin controls the space OUTSIDE the border, between elements."
+                question: "Which method selects all elements matching a CSS selector?",
+                options: ["getElementById()", "getElementsByClassName()", "querySelector()", "querySelectorAll()"],
+                correctAnswer: 3,
+                explanation: "querySelectorAll() returns a NodeList of all elements matching the specified CSS selector."
               },
               {
-                question: "Which property includes padding and border in the element's total width?",
-                options: ["margin: auto", "box-sizing: border-box", "display: flex", "overflow: hidden"],
-                correctAnswer: 1,
-                explanation: "box-sizing: border-box includes padding and border in the width/height calculation."
+                question: "What is the correct way to add a class to an element?",
+                options: ["element.class = 'active'", "element.className = 'active'", "element.classList.add('active')", "element.addClass('active')"],
+                correctAnswer: 2,
+                explanation: "classList.add() is the modern way to add classes. className is a string that would overwrite all classes."
               }
             ]}
           />
@@ -391,252 +140,249 @@ export default function Chapter5({ progress, updateProgress }: Chapter5Props) {
       )
     },
 
-    'css-layout': {
-      id: 'css-layout',
-      title: 'CSS Layout (Display & Position)',
-      icon: <Layout className="w-5 h-5" />,
+    'advjs-events': {
+      id: 'advjs-events',
+      title: 'Events and Event Handling',
+      icon: <MousePointer className="w-5 h-5" />,
       content: (
         <div className="space-y-6">
           <div className="prose dark:prose-invert max-w-none">
-            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">CSS Display Property</h3>
+            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">JavaScript Events</h3>
             <p className="text-gray-600 dark:text-gray-400 mb-4">
-              The <strong>display</strong> property determines how an element is displayed. Common values include block, inline, inline-block, and flex.
+              Events are actions or occurrences that happen in the system you are programming. JavaScript can detect and respond to these events to create interactive experiences.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-              {[
-                { value: 'block', desc: 'Takes full width, starts on new line', example: 'div, p, h1' },
-                { value: 'inline', desc: 'Takes only needed width, stays in line', example: 'span, a, strong' },
-                { value: 'inline-block', desc: 'Like inline but can have width/height', example: 'button, input' },
-                { value: 'none', desc: 'Element is hidden and removed from flow', example: 'display: none' }
-              ].map((item, i) => (
-                <div key={i} className="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-4">
-                  <code className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded font-mono">{item.value}</code>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">{item.desc}</p>
-                  <p className="text-xs text-gray-500 mt-1">e.g. {item.example}</p>
-                </div>
-              ))}
+            <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6 mb-6">
+              <h4 className="font-bold text-blue-800 dark:text-blue-200 mb-3">Common Events</h4>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {[
+                  { type: 'Click', event: 'click' },
+                  { type: 'Double Click', event: 'dblclick' },
+                  { type: 'Mouse Over', event: 'mouseover' },
+                  { type: 'Mouse Out', event: 'mouseout' },
+                  { type: 'Key Press', event: 'keypress' },
+                  { type: 'Key Down', event: 'keydown' },
+                  { type: 'Key Up', event: 'keyup' },
+                  { type: 'Focus', event: 'focus' },
+                  { type: 'Blur', event: 'blur' },
+                  { type: 'Change', event: 'change' },
+                  { type: 'Submit', event: 'submit' },
+                  { type: 'Load', event: 'load' }
+                ].map((item, i) => (
+                  <div key={i} className="bg-white dark:bg-gray-800 rounded-lg p-2 text-center">
+                    <p className="font-bold text-blue-600 text-sm">{item.type}</p>
+                    <code className="text-xs text-gray-500">{item.event}</code>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 mt-8">CSS Position Property</h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
-              The <strong>position</strong> property specifies the positioning method for an element.
-            </p>
-
-            <div className="space-y-3 mb-6">
-              {[
-                { value: 'static', desc: 'Default. Normal document flow', note: 'Not affected by top, bottom, left, right' },
-                { value: 'relative', desc: 'Positioned relative to normal position', note: 'Other elements ignore this element\'s space' },
-                { value: 'absolute', desc: 'Positioned relative to nearest positioned ancestor', note: 'Removed from normal document flow' },
-                { value: 'fixed', desc: 'Positioned relative to viewport', note: 'Stays in place when scrolling' },
-                { value: 'sticky', desc: 'Switches between relative and fixed', note: 'Sticks when scrolling reaches threshold' }
-              ].map((item, i) => (
-                <div key={i} className="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-4">
-                  <div className="flex items-center gap-4 mb-2">
-                    <code className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded font-mono">{item.value}</code>
-                    <span className="font-medium text-gray-800 dark:text-white">{item.desc}</span>
-                  </div>
-                  <p className="text-sm text-gray-500">{item.note}</p>
+            <h4 className="text-xl font-bold text-gray-800 dark:text-white mb-3">Event Handling Methods</h4>
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-xl p-4 font-mono text-sm">
+              <div className="space-y-3">
+                <div className="p-3 bg-green-100 dark:bg-green-900/30 rounded-lg">
+                  <p className="text-green-800 dark:text-green-200">HTML Inline (not recommended)</p>
+                  <code className="text-xs text-green-600">{'<button onclick="alert(\'Hi!\')">Click me</button>'}</code>
                 </div>
-              ))}
+                <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                  <p className="text-blue-800 dark:text-blue-200">DOM Level 0 (older)</p>
+                  <code className="text-xs text-blue-600">element.onclick = function() {'{'}...{'}'}</code>
+                </div>
+                <div className="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
+                  <p className="text-purple-800 dark:text-purple-200">addEventListener (recommended)</p>
+                  <code className="text-xs text-purple-600">element.addEventListener('click', function() {'{'}...{'}'})</code>
+                </div>
+              </div>
             </div>
           </div>
 
           <InteractiveCodeEditor
-            title="Display and Position Demo"
-            language="html"
-            initialCode={`<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        .box {
-            width: 100px;
-            height: 100px;
-            margin: 10px;
-        }
+            title="Event Handling Demo"
+            language="javascript"
+            initialCode={`// Basic Click Event
+const button = document.getElementById("myButton");
+button.addEventListener("click", function() {
+    console.log("Button clicked!");
+});
 
-        .static {
-            background: #3498db;
-            position: static;
-        }
+// Event with Parameter
+function handleClick(event) {
+    console.log("Clicked:", event.target.textContent);
+}
+button.addEventListener("click", handleClick);
 
-        .relative {
-            background: #e74c3c;
-            position: relative;
-            left: 50px;
-            top: 20px;
-        }
+// Multiple Events
+const box = document.getElementById("box");
+box.addEventListener("mouseenter", () => {
+    box.style.backgroundColor = "purple";
+});
+box.addEventListener("mouseleave", () => {
+    box.style.backgroundColor = "gray";
+});
 
-        .absolute {
-            background: #2ecc71;
-            position: absolute;
-            right: 10px;
-            top: 10px;
-        }
+// Keyboard Events
+const input = document.getElementById("textInput");
+input.addEventListener("keyup", (e) => {
+    console.log("Key pressed:", e.key);
+    console.log("Key code:", e.keyCode);
+});
 
-        .fixed {
-            background: #9b59b6;
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-        }
+// Form Submit Event
+const form = document.getElementById("myForm");
+form.addEventListener("submit", (e) => {
+    e.preventDefault(); // Prevent page reload
+    console.log("Form submitted!");
+    const formData = new FormData(form);
+    console.log("Email:", formData.get("email"));
+});
 
-        .container {
-            position: relative;
-            background: #f0f0f0;
-            padding: 20px;
-            min-height: 200px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="box static">Static</div>
-        <div class="box relative">Relative (moved)</div>
-        <div class="box absolute">Absolute (in container)</div>
-    </div>
-    <div class="box fixed">Fixed (viewport)</div>
-</body>
-</html>`}
+// Event Delegation (for dynamic elements)
+document.body.addEventListener("click", (e) => {
+    if (e.target.classList.contains("btn")) {
+        console.log("Button clicked via delegation!");
+    }
+});
+
+// Removing Events
+function oneTimeClick() {
+    console.log("This will only fire once!");
+    button.removeEventListener("click", oneTimeClick);
+}
+button.addEventListener("click", oneTimeClick);`}
+          />
+
+          <Exercise
+            question="Create an event listener that listens for a click on a button, and when clicked, changes the text content of a paragraph element from 'Waiting...' to 'Clicked!' and changes the paragraph color to green."
+            hint="First select both the button and paragraph using getElementById or querySelector, then use addEventListener for the click event, and inside the handler use textContent and style.color to update the paragraph."
+            solution={`const button = document.getElementById("myButton");
+const paragraph = document.getElementById("status");
+
+button.addEventListener("click", function() {
+    paragraph.textContent = "Clicked!";
+    paragraph.style.color = "green";
+});`}
           />
         </div>
       )
     },
 
-    'css-flexbox': {
-      id: 'css-flexbox',
-      title: 'CSS Flexbox',
-      icon: <Layers className="w-5 h-5" />,
+    'advjs-objects': {
+      id: 'advjs-objects',
+      title: 'Advanced Objects',
+      icon: <Braces className="w-5 h-5" />,
       content: (
         <div className="space-y-6">
           <div className="prose dark:prose-invert max-w-none">
-            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">Flexbox Layout</h3>
+            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">Advanced Object Concepts</h3>
             <p className="text-gray-600 dark:text-gray-400 mb-4">
-              <strong>Flexbox</strong> is a one-dimensional layout method for arranging items in rows or columns. It makes complex layouts easy to implement with clean, maintainable code.
+              JavaScript objects are versatile. Let's explore advanced features like prototypes, getters/setters, and property descriptors.
             </p>
 
-            <div className="bg-gradient-to-r from-teal-500 to-blue-500 rounded-xl p-6 text-white mb-6">
-              <h4 className="font-bold mb-3">Container Properties (Parent)</h4>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                {[
-                  'display: flex',
-                  'flex-direction',
-                  'justify-content',
-                  'align-items',
-                  'flex-wrap',
-                  'gap'
-                ].map((prop, i) => (
-                  <code key={i} className="bg-white/20 px-2 py-1 rounded text-sm">{prop}</code>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-6 mb-6">
-              <h4 className="font-bold mb-3">flex-direction Options</h4>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                {['row', 'row-reverse', 'column', 'column-reverse'].map((dir, i) => (
-                  <div key={i} className="bg-white dark:bg-gray-800 rounded-lg p-2 text-center">
-                    <p className="font-mono text-sm text-purple-600">{dir}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-6 mb-6">
-              <h4 className="font-bold mb-3">justify-content Options</h4>
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
-                {['flex-start', 'flex-end', 'center', 'space-between', 'space-around'].map((jc, i) => (
-                  <div key={i} className="bg-white dark:bg-gray-800 rounded-lg p-2 text-center">
-                    <p className="font-mono text-xs text-blue-600">{jc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <h4 className="text-xl font-bold text-gray-800 dark:text-white mb-3">Item Properties (Children)</h4>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-              {[
-                { prop: 'flex-grow', desc: 'How much to grow' },
-                { prop: 'flex-shrink', desc: 'How much to shrink' },
-                { prop: 'flex-basis', desc: 'Initial size' },
-                { prop: 'align-self', desc: 'Override alignment' },
-                { prop: 'order', desc: 'Display order' }
-              ].map((item, i) => (
-                <div key={i} className="bg-orange-50 dark:bg-orange-900/20 rounded-lg p-3">
-                  <code className="text-orange-700 dark:text-orange-300">{item.prop}</code>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">{item.desc}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div className="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-4">
+                <h4 className="font-bold text-purple-800 dark:text-purple-200 mb-3">Getters and Setters</h4>
+                <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-3 font-mono text-sm">
+                  <p className="text-purple-600">get propertyName() {'{'}...{'}'}</p>
+                  <p className="text-purple-600">set propertyName() {'{'}...{'}'}</p>
                 </div>
-              ))}
+              </div>
+              <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4">
+                <h4 className="font-bold text-blue-800 dark:text-blue-200 mb-3">Object Methods</h4>
+                <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-3 font-mono text-sm">
+                  <p className="text-blue-600">Object.freeze()</p>
+                  <p className="text-blue-600">Object.seal()</p>
+                  <p className="text-blue-600">Object.keys()</p>
+                </div>
+              </div>
             </div>
           </div>
 
           <InteractiveCodeEditor
-            title="Flexbox Gallery"
-            language="html"
-            initialCode={`<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            padding: 20px;
-            background: #f5f5f5;
-        }
+            title="Advanced Objects Demo"
+            language="javascript"
+            initialCode={`// Getter and Setter
+const person = {
+    firstName: "John",
+    lastName: "Doe",
+    get fullName() {
+        return this.firstName + " " + this.lastName;
+    },
+    set fullName(name) {
+        const parts = name.split(" ");
+        this.firstName = parts[0];
+        this.lastName = parts[1];
+    }
+};
 
-        .item {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            min-width: 100px;
-        }
+console.log(person.fullName);  // "John Doe"
+person.fullName = "Jane Smith";
+console.log(person.firstName);  // "Jane"
 
-        .item:nth-child(2) {
-            flex-grow: 2; /* Takes double space */
-        }
+// Prototype Chain
+function Animal(name) {
+    this.name = name;
+}
+Animal.prototype.speak = function() {
+    return this.name + " makes a sound";
+};
 
-        .item:nth-child(4) {
-            flex-shrink: 0; /* Won't shrink */
-        }
-    </style>
-</head>
-<body>
-    <h3>Flexbox Gallery</h3>
-    <div class="container">
-        <div class="item">1</div>
-        <div class="item">2 (grows)</div>
-        <div class="item">3</div>
-        <div class="item">4 (no shrink)</div>
-        <div class="item">5</div>
-    </div>
+const dog = new Animal("Dog");
+console.log(dog.speak());  // "Dog makes a sound"
+console.log(dog instanceof Animal);  // true
 
-    <h3 style="margin-top: 30px;">Try changing flex-direction!</h3>
-    <p>Add: flex-direction: column;</p>
-</body>
-</html>`}
+// Object.defineProperty
+const obj = {};
+Object.defineProperty(obj, "secret", {
+    value: 42,
+    writable: false,  // Cannot be changed
+    enumerable: true,
+    configurable: false
+});
+
+// Object.freeze (immutable)
+const frozen = { x: 1, y: 2 };
+Object.freeze(frozen);
+// frozen.x = 5;  // Error in strict mode!
+
+// Object.seal (can modify, cannot add/remove)
+const sealed = { a: 1 };
+Object.seal(sealed);
+sealed.a = 5;  // OK
+// sealed.b = 2;  // Error!
+
+// Symbol (unique property keys)
+const id = Symbol("id");
+const user = {
+    name: "John",
+    [id]: 123
+};
+console.log(user[id]);  // 123
+
+// WeakMap (private data)
+const privateData = new WeakMap();
+function Counter() {
+    privateData.set(this, { count: 0 });
+}
+Counter.prototype.increment = function() {
+    let data = privateData.get(this);
+    data.count++;
+    return data.count;
+};`}
           />
 
           <Quiz
             questions={[
               {
-                question: "Which property creates a flex container?",
-                options: ["position: flex", "display: flex", "flex: container", "layout: flexbox"],
-                correctAnswer: 1,
-                explanation: "display: flex creates a flex container."
+                question: "What does Object.freeze() do to an object?",
+                options: ["Prevents adding new properties only", "Prevents modifying existing properties only", "Prevents adding, removing, or modifying properties", "Creates a backup copy"],
+                correctAnswer: 2,
+                explanation: "Object.freeze() makes an object completely immutable - no additions, removals, or modifications are allowed."
               },
               {
-                question: "What does justify-content control?",
-                options: [
-                  "Vertical alignment of items",
-                  "Horizontal alignment of items",
-                  "Item order",
-                  "Item size"
-                ],
-                correctAnswer: 1,
-                explanation: "justify-content controls alignment along the main axis (horizontal in row direction)."
+                question: "What is a Symbol used for in JavaScript?",
+                options: ["Creating unique identifiers for objects", "Encrypting data", "Creating special characters", "Defining data types"],
+                correctAnswer: 0,
+                explanation: "Symbols create unique, immutable identifiers that can be used as property keys to avoid naming conflicts."
               }
             ]}
           />
@@ -644,717 +390,927 @@ export default function Chapter5({ progress, updateProgress }: Chapter5Props) {
       )
     },
 
-    'css-grid': {
-      id: 'css-grid',
-      title: 'CSS Grid',
-      icon: <Grid className="w-5 h-5" />,
+    'advjs-strings': {
+      id: 'advjs-strings',
+      title: 'String Methods',
+      icon: <FileText className="w-5 h-5" />,
       content: (
         <div className="space-y-6">
           <div className="prose dark:prose-invert max-w-none">
-            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">CSS Grid Layout</h3>
+            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">JavaScript String Methods</h3>
             <p className="text-gray-600 dark:text-gray-400 mb-4">
-              <strong>CSS Grid</strong> is a two-dimensional layout system that handles both columns and rows simultaneously. It's perfect for complex page layouts and gallery grids.
+              Strings are fundamental in JavaScript. Mastering string methods is essential for text processing and manipulation.
             </p>
 
-            <div className="bg-gradient-to-r from-indigo-500 to-purple-500 rounded-xl p-6 text-white mb-6">
-              <h4 className="font-bold mb-3">Grid Container Properties</h4>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                {[
-                  'display: grid',
-                  'grid-template-columns',
-                  'grid-template-rows',
-                  'grid-template-areas',
-                  'gap',
-                  'grid-column/row'
-                ].map((prop, i) => (
-                  <code key={i} className="bg-white/20 px-2 py-1 rounded text-sm">{prop}</code>
+            <div className="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-4 mb-6">
+              <h4 className="font-bold text-gray-800 dark:text-white mb-3">Essential String Methods</h4>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
+                {['charAt()', 'concat()', 'includes()', 'indexOf()', 'lastIndexOf()', 'match()', 'replace()', 'search()', 'slice()', 'split()', 'substring()', 'toLowerCase()', 'toUpperCase()', 'trim()', 'startsWith()', 'endsWith()'].map((method, i) => (
+                  <code key={i} className="bg-white dark:bg-gray-800 px-2 py-1 rounded text-blue-600 dark:text-blue-400 text-center">{method}</code>
                 ))}
               </div>
             </div>
-
-            <div className="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-6 mb-6">
-              <h4 className="font-bold mb-3">Defining Grid Tracks</h4>
-              <div className="space-y-2 font-mono text-sm">
-                <p className="text-purple-600">grid-template-columns: <span className="text-green-600">100px 100px 100px</span>;</p>
-                <p className="text-purple-600">grid-template-columns: <span className="text-green-600">1fr 2fr 1fr</span>;</p>
-                <p className="text-purple-600">grid-template-columns: <span className="text-green-600">repeat(3, 1fr)</span>;</p>
-                <p className="text-purple-600">grid-template-columns: <span className="text-green-600">repeat(auto-fit, minmax(200px, 1fr))</span>;</p>
-              </div>
-            </div>
-
-            <h4 className="text-xl font-bold text-gray-800 dark:text-white mb-3">Grid Item Placement</h4>
-            <div className="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-4 font-mono text-sm mb-6">
-              <p className="text-blue-600">.item {'{'}</p>
-              <p className="ml-4 text-purple-600">grid-column: <span className="text-green-600">1 / 3</span>; <span className="text-gray-500">/* span columns 1 to 3 */</span></p>
-              <p className="ml-4 text-purple-600">grid-row: <span className="text-green-600">2 / 4</span>; <span className="text-gray-500">/* span rows 2 to 4 */</span></p>
-              <p className="text-blue-600">{'}'}</p>
-            </div>
           </div>
 
           <InteractiveCodeEditor
-            title="CSS Grid Layout"
-            language="html"
-            initialCode={`<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: auto;
-            gap: 15px;
-            padding: 20px;
-            background: #f5f5f5;
-        }
+            title="String Methods Demo"
+            language="javascript"
+            initialCode={`const text = "  Hello, World!  ";
 
-        .grid-item {
-            background: linear-gradient(135deg, #11998e, #38ef7d);
-            color: white;
-            padding: 30px;
-            border-radius: 10px;
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-        }
+// Basic Methods
+console.log(text.length);           // 18 (with spaces)
+console.log(text.toUpperCase());   // "  HELLO, WORLD!  "
+console.log(text.toLowerCase());   // "  hello, world!  "
+console.log(text.trim());           // "Hello, World!"
+console.log(text.trimStart());     // "Hello, World!  "
+console.log(text.trimEnd());       // "  Hello, World!"
 
-        .wide {
-            grid-column: span 2;
-            background: linear-gradient(135deg, #fc4a1a, #f7b733);
-        }
+// Finding
+console.log(text.indexOf("World"));      // 10
+console.log(text.lastIndexOf("o"));       // 13
+console.log(text.includes("Hello"));      // true
+console.log(text.startsWith("  Hello"));   // true
+console.log(text.endsWith("!  "));       // true
+console.log(text.search(/world/i));       // 10 (regex)
 
-        .tall {
-            grid-row: span 2;
-            background: linear-gradient(135deg, #8e2de2, #4a00e0);
-            padding: 50px;
-        }
-    </style>
-</head>
-<body>
-    <h3>CSS Grid Layout</h3>
-    <div class="grid-container">
-        <div class="grid-item">1</div>
-        <div class="grid-item wide">2 (wide)</div>
-        <div class="grid-item">3</div>
-        <div class="grid-item tall">4 (tall)</div>
-        <div class="grid-item">5</div>
-        <div class="grid-item">6</div>
-        <div class="grid-item">7</div>
-    </div>
-</body>
-</html>`}
+// Extracting
+console.log(text.slice(2, 7));     // "Hello"
+console.log(text.substring(2, 7)); // "Hello"
+console.log(text.slice(-7, -1));   // "World"
+console.log(text.charAt(0));       // " "
+
+// Modifying
+console.log(text.replace("World", "Universe"));
+console.log(text.replace(/world/i, "Universe")); // regex
+console.log(text.replaceAll("o", "0"));  // ES2021
+
+// Splitting
+const csv = "apple,banana,orange";
+console.log(csv.split(","));    // ["apple", "banana", "orange"]
+console.log(csv.split(""));    // ["a","p","p","l","e",",",...]
+
+// Template Literals (Review)
+const name = "Alice";
+const greeting = \`Hello, \${name}!
+Welcome to \${text.trim()}.\`;
+console.log(greeting);
+
+// String Padding (ES2017)
+console.log("5".padStart(3, "0"));     // "005"
+console.log("5".padEnd(3, "0"));       // "500"
+
+// Template Tag Functions
+function highlight(strings, value) {
+    return strings[0] + "**" + value + "**" + strings[1];
+}
+const result = highlight\`Hello \${name}!\`;
+console.log(result);  // "Hello **Alice**!"`}
+          />
+
+          <Exercise
+            question="Write a function that takes a full name (e.g., 'john doe') and returns the name in title case (e.g., 'John Doe'). Title case means the first letter of each word is capitalized."
+            hint="Use split() to break the string into words, use toUpperCase() on the first character, and slice() or substring() for the rest of each word."
+            solution={`function toTitleCase(name) {
+    return name
+        .split(" ")
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(" ");
+}
+
+console.log(toTitleCase("john doe"));  // "John Doe"
+console.log(toTitleCase("JANE SMITH"));  // "Jane Smith"`}
           />
         </div>
       )
     },
 
-    'css-colors-backgrounds': {
-      id: 'css-colors-backgrounds',
-      title: 'Colors and Backgrounds',
-      icon: <Palette className="w-5 h-5" />,
+    'advjs-dates': {
+      id: 'advjs-dates',
+      title: 'Date Objects',
+      icon: <CalendarClock className="w-5 h-5" />,
       content: (
         <div className="space-y-6">
           <div className="prose dark:prose-invert max-w-none">
-            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">CSS Colors</h3>
+            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">JavaScript Date Objects</h3>
             <p className="text-gray-600 dark:text-gray-400 mb-4">
-              CSS supports multiple ways to specify colors: color names, HEX codes, RGB, RGBA, HSL, and HSLA.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-              <div className="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-4">
-                <h4 className="font-bold mb-3">Color Formats</h4>
-                <div className="space-y-2 font-mono text-sm">
-                  <p className="text-red-500">color: red;</p>
-                  <p className="text-purple-500">color: #ff00ff;</p>
-                  <p className="text-blue-500">color: rgb(0, 0, 255);</p>
-                  <p className="text-green-500">color: rgba(0, 255, 0, 0.5);</p>
-                  <p className="text-teal-500">color: hsl(180, 100%, 50%);</p>
-                </div>
-              </div>
-              <div className="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-4">
-                <h4 className="font-bold mb-3">Background Properties</h4>
-                <div className="space-y-2 font-mono text-sm">
-                  <p>background-color</p>
-                  <p>background-image</p>
-                  <p>background-size</p>
-                  <p>background-position</p>
-                  <p>background-repeat</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-br from-pink-100 to-purple-100 dark:from-pink-900/20 dark:to-purple-900/20 rounded-xl p-6 mb-6">
-              <h4 className="font-bold text-purple-800 dark:text-purple-200 mb-3">Gradient Syntax</h4>
-              <div className="bg-white dark:bg-gray-800 rounded-lg p-4 font-mono text-sm">
-                <p className="text-purple-600">background: <span className="text-green-600">linear-gradient(direction, color1, color2)</span>;</p>
-                <p className="text-gray-500 mt-2">/* Examples: */</p>
-                <p className="text-blue-500">linear-gradient(to right, red, yellow)</p>
-                <p className="text-blue-500">linear-gradient(45deg, blue, pink)</p>
-                <p className="text-blue-500">radial-gradient(circle, red, blue)</p>
-              </div>
-            </div>
-          </div>
-
-          <InteractiveCodeEditor
-            title="Colors and Gradients"
-            language="html"
-            initialCode={`<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        .box {
-            padding: 30px;
-            margin: 10px;
-            border-radius: 10px;
-            color: white;
-            text-align: center;
-        }
-
-        .solid { background-color: #3498db; }
-
-        .gradient-h {
-            background: linear-gradient(to right, #667eea, #764ba2);
-        }
-
-        .gradient-d {
-            background: linear-gradient(135deg, #f093fb, #f5576c);
-        }
-
-        .radial {
-            background: radial-gradient(circle, #4facfe, #00f2fe);
-        }
-
-        .transparent {
-            background: rgba(231, 76, 60, 0.7);
-            border: 3px solid rgba(231, 76, 60, 1);
-        }
-    </style>
-</head>
-<body>
-    <div class="box solid">Solid Color</div>
-    <div class="box gradient-h">Horizontal Gradient</div>
-    <div class="box gradient-d">Diagonal Gradient</div>
-    <div class="box radial">Radial Gradient</div>
-    <div class="box transparent">Semi-Transparent</div>
-</body>
-</html>`}
-          />
-        </div>
-      )
-    },
-
-    'css-typography': {
-      id: 'css-typography',
-      title: 'CSS Typography',
-      icon: <Type className="w-5 h-5" />,
-      content: (
-        <div className="space-y-6">
-          <div className="prose dark:prose-invert max-w-none">
-            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">Text and Typography</h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
-              CSS provides extensive control over text appearance including font families, sizes, weights, styles, and spacing.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-              {[
-                { prop: 'font-family', example: 'Arial, sans-serif' },
-                { prop: 'font-size', example: '16px, 1.5em, 2rem' },
-                { prop: 'font-weight', example: 'normal, bold, 100-900' },
-                { prop: 'font-style', example: 'normal, italic, oblique' },
-                { prop: 'text-align', example: 'left, center, right, justify' },
-                { prop: 'text-decoration', example: 'none, underline, line-through' },
-                { prop: 'line-height', example: '1.5, 24px' },
-                { prop: 'letter-spacing', example: '2px, -1px' }
-              ].map((item, i) => (
-                <div key={i} className="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-3">
-                  <code className="text-purple-600 dark:text-purple-400">{item.prop}</code>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">e.g. {item.example}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="bg-yellow-50 dark:bg-yellow-900/20 rounded-xl p-6 mb-6">
-              <h4 className="font-bold text-yellow-800 dark:text-yellow-200 mb-3">Google Fonts Example</h4>
-              <div className="bg-white dark:bg-gray-800 rounded-lg p-4 font-mono text-sm">
-                <p className="text-green-600">{/* In HTML <head> */}</p>
-                <p className="text-blue-600">&lt;link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"&gt;</p>
-                <p className="text-green-600 mt-3">/* In CSS */</p>
-                <p className="text-purple-600">font-family: <span className="text-green-600">'Roboto', sans-serif</span>;</p>
-              </div>
-            </div>
-          </div>
-
-          <InteractiveCodeEditor
-            title="Typography Showcase"
-            language="html"
-            initialCode={`<!DOCTYPE html>
-<html>
-<head>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Open+Sans&display=swap" rel="stylesheet">
-    <style>
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3em;
-            font-weight: bold;
-            text-align: center;
-        }
-
-        .uppercase {
-            text-transform: uppercase;
-            letter-spacing: 5px;
-        }
-
-        .shadow {
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .fancy {
-            font-style: italic;
-            text-decoration: underline wavy red;
-            line-height: 2;
-        }
-
-        p {
-            font-family: 'Open Sans', sans-serif;
-            font-size: 1.2em;
-            line-height: 1.8;
-            text-align: justify;
-        }
-    </style>
-</head>
-<body>
-    <h1 class="shadow">Typography Demo</h1>
-    <p class="uppercase">This text is uppercase with letter spacing</p>
-    <p class="fancy">This paragraph has italic text, wavy underline, and double line height.</p>
-    <p>This is normal paragraph text with proper line height for readability.</p>
-</body>
-</html>`}
-          />
-        </div>
-      )
-    },
-
-    'css-transitions-animations': {
-      id: 'css-transitions-animations',
-      title: 'Transitions and Animations',
-      icon: <Zap className="w-5 h-5" />,
-      content: (
-        <div className="space-y-6">
-          <div className="prose dark:prose-invert max-w-none">
-            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">CSS Transitions</h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
-              <strong>Transitions</strong> allow you to smoothly animate changes to CSS properties over a specified duration.
+              JavaScript's Date object provides methods for working with dates and times. It stores dates as the number of milliseconds since January 1, 1970.
             </p>
 
             <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6 mb-6">
-              <h4 className="font-bold text-blue-800 dark:text-blue-200 mb-3">Transition Properties</h4>
-              <div className="bg-white dark:bg-gray-800 rounded-lg p-4 font-mono text-sm">
-                <p className="text-purple-600">transition: <span className="text-green-600">property duration timing-function delay</span>;</p>
-                <p className="text-gray-500 mt-2">/* Shorthand example: */</p>
-                <p className="text-blue-500">transition: all 0.3s ease-in-out;</p>
-                <p className="text-blue-500">transition: background-color 0.5s linear, transform 0.3s ease;</p>
+              <h4 className="font-bold text-blue-800 dark:text-blue-200 mb-3">Creating Dates</h4>
+              <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-3 font-mono text-sm">
+                <p className="text-blue-600">new Date()</p>
+                <p className="text-blue-600">new Date(milliseconds)</p>
+                <p className="text-blue-600">new Date(dateString)</p>
+                <p className="text-blue-600">new Date(year, month, day, hours, minutes, seconds, ms)</p>
               </div>
             </div>
 
-            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 mt-8">CSS Animations</h3>
+            <h4 className="text-xl font-bold text-gray-800 dark:text-white mb-3">Date Methods</h4>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              {['getFullYear()', 'getMonth()', 'getDate()', 'getDay()', 'getHours()', 'getMinutes()', 'getSeconds()', 'getMilliseconds()', 'getTime()', 'setFullYear()', 'setMonth()', 'setDate()'].map((method, i) => (
+                <code key={i} className="bg-white dark:bg-gray-800 px-2 py-2 rounded text-blue-600 dark:text-blue-400 text-sm text-center">{method}</code>
+              ))}
+            </div>
+          </div>
+
+          <InteractiveCodeEditor
+            title="Date Objects Demo"
+            language="javascript"
+            initialCode={`// Current Date
+const now = new Date();
+console.log(now);
+console.log(now.toString());
+
+// Creating Specific Dates
+const date1 = new Date("2024-01-15");
+const date2 = new Date(2024, 0, 15);  // Note: month is 0-indexed
+const date3 = new Date(2024, 0, 15, 14, 30, 0);
+
+// Getting Components
+console.log(now.getFullYear());     // 2024
+console.log(now.getMonth());        // 0-11 (January = 0)
+console.log(now.getDate());        // 1-31
+console.log(now.getDay());         // 0-6 (Sunday = 0)
+console.log(now.getHours());       // 0-23
+console.log(now.getMinutes());     // 0-59
+console.log(now.getSeconds());     // 0-59
+console.log(now.getMilliseconds());
+console.log(now.getTime());         // Timestamp
+
+// Setting Components
+now.setFullYear(2025);
+now.setMonth(5);  // June
+now.setDate(20);
+
+// Date Formatting
+console.log(now.toDateString());       // "Fri Jun 20 2025"
+console.log(now.toTimeString());        // "HH:MM:SS GMT..."
+console.log(now.toISOString());         // "2025-06-20T..."
+console.log(now.toLocaleDateString());  // Local format
+console.log(now.toLocaleTimeString());
+
+// Date Arithmetic
+const start = new Date("2024-01-01");
+const end = new Date("2024-01-15");
+const diff = end - start;  // Milliseconds
+console.log(diff / (1000 * 60 * 60 * 24));  // 14 days
+
+// More Calculations
+function addDays(date, days) {
+    const result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+}
+console.log(addDays(new Date(), 7));  // Date 7 days from now
+
+// Relative Time
+function timeAgo(date) {
+    const seconds = Math.floor((new Date() - date) / 1000);
+    const intervals = [
+        { label: 'year', seconds: 31536000 },
+        { label: 'month', seconds: 2592000 },
+        { label: 'day', seconds: 86400 },
+        { label: 'hour', seconds: 3600 },
+        { label: 'minute', seconds: 60 }
+    ];
+    for (const interval of intervals) {
+        const count = Math.floor(seconds / interval.seconds);
+        if (count >= 1) {
+            return \`\${count} \${interval.label}\${count > 1 ? 's' : ''} ago\`;
+        }
+    }
+    return "just now";
+}
+console.log(timeAgo(new Date(Date.now() - 3600000)));  // "1 hour ago"`}
+          />
+
+          <Quiz
+            questions={[
+              {
+                question: "What month does getMonth() return for March?",
+                options: ["1", "2", "3", "0"],
+                correctAnswer: 1,
+                explanation: "JavaScript's getMonth() is zero-indexed, so January is 0 and March is 2."
+              },
+              {
+                question: "How do you calculate the number of days between two dates?",
+                options: ["date1 - date2", "(date1 - date2) / 86400000", "date1.daysTo(date2)", "date1.getDays() - date2.getDays()"],
+                correctAnswer: 1,
+                explanation: "Subtract the timestamps and divide by the number of milliseconds in a day (1000 * 60 * 60 * 24 = 86400000)."
+              }
+            ]}
+          />
+        </div>
+      )
+    },
+
+    'advjs-regex': {
+      id: 'advjs-regex',
+      title: 'Regular Expressions',
+      icon: <Regex className="w-5 h-5" />,
+      content: (
+        <div className="space-y-6">
+          <div className="prose dark:prose-invert max-w-none">
+            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">Regular Expressions (Regex)</h3>
             <p className="text-gray-600 dark:text-gray-400 mb-4">
-              <strong>Animations</strong> allow you to create more complex effects with multiple keyframes.
+              Regular expressions are patterns used to match character combinations in text. They're powerful for validation, search, and text replacement.
             </p>
 
             <div className="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-6 mb-6">
-              <h4 className="font-bold text-purple-800 dark:text-purple-200 mb-3">Animation Syntax</h4>
-              <div className="bg-white dark:bg-gray-800 rounded-lg p-4 font-mono text-sm">
-                <p className="text-purple-600">animation: <span className="text-green-600">name duration timing-function delay iteration-count</span>;</p>
-                <p className="mt-3 text-purple-600">@keyframes <span className="text-green-600">name</span> {'{'}</p>
-                <p className="ml-4 text-blue-500">0% {'{'} /* starting state */ {'}'}</p>
-                <p className="ml-4 text-blue-500">50% {'{'} /* middle state */ {'}'}</p>
-                <p className="ml-4 text-blue-500">100% {'{'} /* ending state */ {'}'}</p>
+              <h4 className="font-bold text-purple-800 dark:text-purple-200 mb-3">Regex Syntax</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
+                  <p className="font-bold text-purple-600 mb-2">Character Classes</p>
+                  <code className="text-xs">. - any character</code><br />
+                  <code className="text-xs">\d - digit [0-9]</code><br />
+                  <code className="text-xs">\w - word [a-zA-Z0-9_]</code><br />
+                  <code className="text-xs">\s - whitespace</code>
+                </div>
+                <div className="bg-white dark:bg-gray-800 rounded-lg p-3">
+                  <p className="font-bold text-purple-600 mb-2">Quantifiers</p>
+                  <code className="text-xs">* - 0 or more</code><br />
+                  <code className="text-xs">+ - 1 or more</code><br />
+                  <code className="text-xs">? - 0 or 1</code><br />
+                  <code className="text-xs">{'{'}n{'}'} - exactly n</code>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <InteractiveCodeEditor
+            title="Regular Expressions Demo"
+            language="javascript"
+            initialCode={`// Creating Regular Expressions
+const regex1 = /pattern/flags;
+const regex2 = new RegExp("pattern", "flags");
+
+// Flags: g (global), i (case-insensitive), m (multiline)
+
+// Basic Matching
+const text = "Hello World! 123";
+console.log(/hello/.test(text));           // false (case-sensitive)
+console.log(/hello/i.test(text));          // true (case-insensitive)
+console.log(/\\d+/.test(text));            // true (digits)
+console.log(/\\w+/.test(text));            // true (word characters)
+
+// Metacharacters
+console.log(/^Hello/.test(text));           // true (starts with Hello)
+console.log(/World$/.test(text));           // true (ends with World)
+console.log(/\\d{3}/.test(text));          // true (3 digits)
+console.log(/[aeiou]/i.test(text));        // true (any vowel)
+
+// Searching
+const sentence = "The quick brown fox jumps";
+console.log(sentence.match(/\\w+ox/));     // ["fox"]
+console.log(sentence.search(/brown/));      // 10
+console.log("abc123def".replace(/\\d+/, "XYZ"));  // "abcXYZdef"
+console.log("cat bat hat".replace(/at/g, "ond"));  // "cond bond hend"
+
+// More Patterns
+const email = /^[\\w.-]+@[\\w.-]+\\.\\w+$/;
+console.log(email.test("user@example.com"));  // true
+console.log(email.test("invalid"));          // false
+
+const phone = /^\\d{3}-\\d{3}-\\d{4}$/;
+console.log(phone.test("123-456-7890"));    // true
+
+const url = /^https?:\\/\\/[\\w.-]+(?:\\.[\\w.-]+)+[\\w\\-._~:/?#[\\]@!$&'()*+,;=.]*$/;
+console.log(url.test("https://example.com"));  // true
+
+// replace with function
+console.log("John Doe".replace(/(\\w+) (\\w+)/, "$2, $1"));  // "Doe, John"
+
+// Split with regex
+console.log("a,b;c:d".split(/[,;:]/));  // ["a","b","c","d"]`}
+          />
+
+          <Exercise
+            question="Write a regular expression that validates a password. The password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one digit, and one special character (@$!%*?&)."
+            hint="Use lookahead assertions (?=...) to check for multiple conditions without consuming characters."
+            solution={`const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$/;
+
+console.log(passwordRegex.test("Pass123@"));     // true
+console.log(passwordRegex.test("password"));     // false (no uppercase, no digit, no special)
+console.log(passwordRegex.test("PASS123@"));     // false (no lowercase)
+console.log(passwordRegex.test("Pass@"));        // false (too short)`}
+          />
+        </div>
+      )
+    },
+
+    'advjs-cookies': {
+      id: 'advjs-cookies',
+      title: 'Cookies and Storage',
+      icon: <Cookie className="w-5 h-5" />,
+      content: (
+        <div className="space-y-6">
+          <div className="prose dark:prose-invert max-w-none">
+            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">Browser Storage</h3>
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
+              Modern browsers provide several ways to store data on the client side. Understanding when to use each is crucial for building effective web applications.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              {[
+                { type: 'localStorage', size: '~5MB', lifetime: 'Permanent', color: 'blue' },
+                { type: 'sessionStorage', size: '~5MB', lifetime: 'Tab session', color: 'green' },
+                { type: 'cookies', size: '~4KB', lifetime: 'Customizable', color: 'orange' }
+              ].map((item, i) => (
+                <div key={i} className={`bg-${item.color}-50 dark:bg-${item.color}-900/20 border border-${item.color}-200 dark:border-${item.color}-800 rounded-xl p-4`}>
+                  <p className={`font-bold text-${item.color}-800 dark:text-${item.color}-200`}>{item.type}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Size: {item.size}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Lifetime: {item.lifetime}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <InteractiveCodeEditor
+            title="Browser Storage Demo"
+            language="javascript"
+            initialCode={`// localStorage (persists until cleared)
+localStorage.setItem("name", "John");
+localStorage.setItem("theme", "dark");
+localStorage.setItem("preferences", JSON.stringify({ fontSize: 16 }));
+
+const name = localStorage.getItem("name");
+const prefs = JSON.parse(localStorage.getItem("preferences"));
+localStorage.removeItem("name");
+localStorage.clear();  // Clear all
+
+// sessionStorage (cleared when tab closes)
+sessionStorage.setItem("currentPage", "1");
+const page = sessionStorage.getItem("currentPage");
+
+// Storing objects (must serialize)
+const user = { name: "Alice", age: 25 };
+localStorage.setItem("user", JSON.stringify(user));
+const savedUser = JSON.parse(localStorage.getItem("user"));
+
+// Cookies
+document.cookie = "username=John; expires=Fri, 31 Dec 2025 23:59:59 GMT; path=/";
+document.cookie = "theme=dark; max-age=8640000";  // 100 days
+document.cookie = "secure=true; samesite=strict";
+
+// Reading cookies
+console.log(document.cookie);  // "username=John; theme=dark; secure=true"
+
+// Better cookie handling
+function setCookie(name, value, days) {
+    const expires = new Date();
+    expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+    document.cookie = \`\${name}=\${value};expires=\${expires.toUTCString()};path=/\`;
+}
+
+function getCookie(name) {
+    const nameEQ = name + "=";
+    const cookies = document.cookie.split(';');
+    for (let cookie of cookies) {
+        cookie = cookie.trim();
+        if (cookie.indexOf(nameEQ) === 0) {
+            return cookie.substring(nameEQ.length);
+        }
+    }
+    return null;
+}
+
+function deleteCookie(name) {
+    document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+}
+
+// Check for feature support
+if (typeof(Storage) !== "undefined") {
+    console.log("localStorage supported!");
+} else {
+    console.log("No localStorage support - fallback to cookies");
+}
+
+// Storage event (for cross-tab sync)
+window.addEventListener('storage', (e) => {
+    console.log('Storage changed:', e.key);
+    console.log('Old value:', e.oldValue);
+    console.log('New value:', e.newValue);
+});`}
+          />
+
+          <Quiz
+            questions={[
+              {
+                question: "How much data can typically be stored in localStorage?",
+                options: ["About 5KB", "About 5MB", "About 50MB", "Unlimited"],
+                correctAnswer: 1,
+                explanation: "localStorage typically allows about 5MB of storage, which is shared across all pages from the same origin."
+              },
+              {
+                question: "What happens to sessionStorage when the browser is closed?",
+                options: ["Data is preserved", "Data is cleared", "Data is encrypted", "Data is moved to localStorage"],
+                correctAnswer: 1,
+                explanation: "sessionStorage is cleared when the browser tab or window is closed. It only persists within the current session."
+              }
+            ]}
+          />
+        </div>
+      )
+    },
+
+    'advjs-jquery': {
+      id: 'advjs-jquery',
+      title: 'jQuery Introduction',
+      icon: <Globe className="w-5 h-5" />,
+      content: (
+        <div className="space-y-6">
+          <div className="prose dark:prose-invert max-w-none">
+            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">jQuery Fundamentals</h3>
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
+              jQuery is a fast, small, and feature-rich JavaScript library. It makes things like HTML document traversal, event handling, and animation much simpler.
+            </p>
+
+            <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl p-6 text-white mb-6">
+              <h4 className="font-bold mb-3">Why jQuery?</h4>
+              <ul className="space-y-2">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 mt-0.5 flex-shrink-0" />
+                  <span>Cross-browser compatibility</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 mt-0.5 flex-shrink-0" />
+                  <span>Simple and concise syntax</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 mt-0.5 flex-shrink-0" />
+                  <span>Powerful DOM manipulation</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 mt-0.5 flex-shrink-0" />
+                  <span>Built-in AJAX support</span>
+                </li>
+              </ul>
+            </div>
+
+            <h4 className="text-xl font-bold text-gray-800 dark:text-white mb-3">jQuery vs Vanilla JS</h4>
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-xl p-4 font-mono text-sm">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-blue-100 dark:bg-blue-900/30 rounded-lg p-3">
+                  <p className="font-bold text-blue-600 mb-2">Vanilla JavaScript</p>
+                  <code className="text-xs">document.querySelector('.box')</code><br />
+                  <code className="text-xs">element.style.color = 'red'</code><br />
+                  <code className="text-xs">element.addEventListener()</code>
+                </div>
+                <div className="bg-purple-100 dark:bg-purple-900/30 rounded-lg p-3">
+                  <p className="font-bold text-purple-600 mb-2">jQuery</p>
+                  <code className="text-xs">$('.box')</code><br />
+                  <code className="text-xs">$element.css('color', 'red')</code><br />
+                  <code className="text-xs">$element.on('click', fn)</code>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <InteractiveCodeEditor
+            title="jQuery Demo"
+            language="javascript"
+            initialCode={`// Wait for DOM ready
+$(document).ready(function() {
+    // Code here runs after DOM loads
+});
+
+// Shorthand
+$(function() {
+    // Shorthand syntax
+});
+
+// Selecting Elements
+$('#myId');           // ID selector
+$('.myClass');        // Class selector
+$('div');             // Tag selector
+$('div.myClass');     // Combined
+$('ul li:first');     // Pseudo-selectors
+
+// Traversing
+$('#list').find('li');        // All descendants
+$('#list').children('li');    // Direct children
+$('#item').parent();          // Parent
+$('#item').siblings();        // Siblings
+$('#item').next();            // Next sibling
+$('#item').prev();            // Previous sibling
+
+// DOM Manipulation
+$('#box').text('New text');
+$('#box').html('<strong>HTML</strong>');
+$('#box').val();                    // Form value
+$('#box').attr('class', 'active'); // Attributes
+$('#box').css('color', 'red');
+$('#box').addClass('highlight');
+$('#box').removeClass('highlight');
+$('#box').toggleClass('highlight');
+
+// Creating Elements
+const $newDiv = $('<div>').text('Hello').addClass('box');
+$('body').append($newDiv);
+
+// Animation
+$('#box').show();
+$('#box').hide();
+$('#box').toggle();
+$('#box').fadeIn(300);
+$('#box').fadeOut(300);
+$('#box').slideUp(300);
+$('#box').slideDown(300);
+
+// Event Handling
+$('#btn').click(function() {
+    alert('Clicked!');
+});
+
+$('#btn').on('click', function() {
+    console.log('Handler 1');
+});
+
+$('#btn').on('click', function() {
+    console.log('Handler 2');
+});
+
+// Event Delegation
+$('ul').on('click', 'li', function() {
+    $(this).toggleClass('active');
+});
+
+// AJAX
+$.ajax({
+    url: '/api/data',
+    method: 'GET',
+    success: function(response) {
+        console.log(response);
+    },
+    error: function(xhr, status, error) {
+        console.error(error);
+    }
+});
+
+// Shorthand AJAX
+$.get('/api/data', function(response) {
+    console.log(response);
+});
+
+$.post('/api/submit', { name: 'John' }, function(response) {
+    console.log(response);
+});`}
+          />
+
+          <Quiz
+            questions={[
+              {
+                question: "Which is the correct jQuery syntax to hide all elements with the class 'demo'?",
+                options: ["$('.demo').hide()", "$('#demo').hide()", "$('demo').hide()", "hide('.demo')"],
+                correctAnswer: 0,
+                explanation: "In jQuery, $() is used to select elements. $('.demo') selects all elements with class 'demo'."
+              },
+              {
+                question: "What does $(document).ready() do?",
+                options: ["Loads external scripts", "Ensures DOM is fully loaded before running code", "Creates a new document", "Saves the document state"],
+                correctAnswer: 1,
+                explanation: "$(document).ready() waits until the DOM is fully loaded before executing the code inside, preventing errors from missing elements."
+              }
+            ]}
+          />
+        </div>
+      )
+    },
+
+    'advjs-ajax': {
+      id: 'advjs-ajax',
+      title: 'AJAX and Fetch API',
+      icon: <Smartphone className="w-5 h-5" />,
+      content: (
+        <div className="space-y-6">
+          <div className="prose dark:prose-invert max-w-none">
+            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">Asynchronous JavaScript</h3>
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
+              AJAX (Asynchronous JavaScript and XML) allows web pages to communicate with servers without reloading. The Fetch API is the modern way to make HTTP requests.
+            </p>
+
+            <div className="bg-green-50 dark:bg-green-900/20 rounded-xl p-6 mb-6">
+              <h4 className="font-bold text-green-800 dark:text-green-200 mb-3">Modern Fetch API</h4>
+              <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-3 font-mono text-sm">
+                <p className="text-green-600">fetch(url)</p>
+                <p className="text-green-600">.then(response {'=>'} response.json())</p>
+                <p className="text-green-600">.then(data {'=>'} console.log(data))</p>
+                <p className="text-green-600">.catch(error {'=>'} console.error(error));</p>
+              </div>
+            </div>
+
+            <h4 className="text-xl font-bold text-gray-800 dark:text-white mb-3">Async/Await</h4>
+            <div className="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-6 mb-6">
+              <p className="text-gray-600 dark:text-gray-400 mb-3">
+                async/await makes asynchronous code look and behave like synchronous code. It's built on top of Promises.
+              </p>
+              <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-3 font-mono text-sm">
+                <p className="text-purple-600">async function fetchData() {'{'}</p>
+                <p className="ml-4 text-blue-600">const response = await fetch(url);</p>
+                <p className="ml-4 text-blue-600">const data = await response.json();</p>
+                <p className="ml-4 text-purple-600">return data;</p>
                 <p className="text-purple-600">{'}'}</p>
               </div>
             </div>
           </div>
 
           <InteractiveCodeEditor
-            title="Transitions and Animations"
-            language="html"
-            initialCode={`<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        .box {
-            width: 100px;
-            height: 100px;
-            background: #3498db;
-            margin: 20px;
-            display: inline-block;
+            title="Fetch API Demo"
+            language="javascript"
+            initialCode={`// Basic GET Request
+fetch('https://api.example.com/users')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
+
+// POST Request with JSON
+async function createUser(userData) {
+    try {
+        const response = await fetch('https://api.example.com/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer token123'
+            },
+            body: JSON.stringify(userData)
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to create user');
         }
 
-        /* Transition on hover */
-        .transition:hover {
-            background: #e74c3c;
-            transform: scale(1.2) rotate(10deg);
+        const newUser = await response.json();
+        console.log('Created:', newUser);
+        return newUser;
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+// Using the function
+createUser({ name: 'John', email: 'john@example.com' });
+
+// Working with Headers
+const headers = new Headers();
+headers.append('Content-Type', 'application/json');
+headers.append('Authorization', 'Bearer token123');
+
+// Request Object
+const request = new Request('https://api.example.com/data', {
+    method: 'GET',
+    headers: headers,
+    cache: 'no-cache'
+});
+
+// Handle different response types
+async function handleResponse(response) {
+    const contentType = response.headers.get('content-type');
+
+    if (contentType.includes('application/json')) {
+        return await response.json();
+    } else if (contentType.includes('text/html')) {
+        return await response.text();
+    } else if (contentType.includes('image/')) {
+        return await response.blob();
+    }
+
+    throw new Error('Unknown content type');
+}
+
+// Multiple simultaneous requests
+Promise.all([
+    fetch('/api/user'),
+    fetch('/api/posts'),
+    fetch('/api/comments')
+])
+.then(responses => Promise.all(responses.map(r => r.json())))
+.then(([user, posts, comments]) => {
+    console.log('User:', user);
+    console.log('Posts:', posts);
+    console.log('Comments:', comments);
+});
+
+// Upload File
+async function uploadFile(file) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+    });
+
+    return await response.json();
+}
+
+// Retry logic
+async function fetchWithRetry(url, retries = 3) {
+    for (let i = 0; i < retries; i++) {
+        try {
+            const response = await fetch(url);
+            if (response.ok) return response;
+        } catch (error) {
+            if (i === retries - 1) throw error;
+            await new Promise(r => setTimeout(r, 1000 * (i + 1)));
         }
-        .transition {
-            transition: all 0.3s ease;
-        }
-
-        /* Animation */
-        .animated {
-            animation: bounce 1s infinite alternate;
-        }
-
-        @keyframes bounce {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0); }
-        }
-
-        /* Pulsing animation */
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        p { margin-top: 30px; font-style: italic; }
-    </style>
-</head>
-<body>
-    <div class="box transition">Hover Me!</div>
-    <div class="box animated">Bouncing</div>
-    <div class="box pulse">Pulsing</div>
-    <p>Hover over the first box to see the transition effect!</p>
-</body>
-</html>`}
-          />
-
-          <Quiz
-            questions={[
-              {
-                question: "What does transition: all 0.5s ease do?",
-                options: [
-                  "Transitions all properties over 0.5 seconds with ease timing",
-                  "Transitions only the color property",
-                  "Transitions with no animation",
-                  "Makes element invisible"
-                ],
-                correctAnswer: 0,
-                explanation: "transition: all animates all animatable properties over 0.5 seconds with ease timing."
-              },
-              {
-                question: "What is required to create a CSS animation?",
-                options: [
-                  "Only the animation property",
-                  "@keyframes rule and animation property",
-                  "JavaScript",
-                  "No special requirements"
-                ],
-                correctAnswer: 1,
-                explanation: "You need both @keyframes to define the animation stages AND the animation property to apply it."
-              }
-            ]}
-          />
-        </div>
-      )
-    },
-
-    'css-media-queries': {
-      id: 'css-media-queries',
-      title: 'Media Queries & Responsive Design',
-      icon: <Monitor className="w-5 h-5" />,
-      content: (
-        <div className="space-y-6">
-          <div className="prose dark:prose-invert max-w-none">
-            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">Responsive Design with Media Queries</h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
-              <strong>Media queries</strong> allow you to apply CSS styles based on device characteristics like screen width, height, and orientation. This is the foundation of responsive web design.
-            </p>
-
-            <div className="bg-gradient-to-r from-teal-500 to-green-500 rounded-xl p-6 text-white mb-6">
-              <h4 className="font-bold mb-3">Basic Syntax</h4>
-              <div className="bg-white/20 rounded-lg p-4 font-mono text-sm">
-                <p>@media <span className="text-yellow-300">media-type</span> and <span className="text-yellow-300">(condition)</span> {'{'}</p>
-                <p className="ml-4">/* CSS rules */</p>
-                <p>{'}'}</p>
-              </div>
-            </div>
-
-            <h4 className="text-xl font-bold text-gray-800 dark:text-white mb-3">Common Breakpoints</h4>
-            <div className="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-4 mb-6">
-              <div className="space-y-2">
-                {[
-                  { size: '< 576px', desc: 'Extra small devices (phones)' },
-                  { size: '576px - 768px', desc: 'Small devices (tablets)' },
-                  { size: '768px - 992px', desc: 'Medium devices (small laptops)' },
-                  { size: '992px - 1200px', desc: 'Large devices (desktops)' },
-                  { size: '> 1200px', desc: 'Extra large devices (large desktops)' }
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-4">
-                    <code className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded font-mono text-sm">{item.size}</code>
-                    <span className="text-gray-600 dark:text-gray-400">{item.desc}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6 mb-6">
-              <h4 className="font-bold text-blue-800 dark:text-blue-200 mb-3">Mobile-First Approach</h4>
-              <div className="bg-white dark:bg-gray-800 rounded-lg p-4 font-mono text-sm">
-                <p className="text-green-600">/* Base styles (mobile) */</p>
-                <p className="text-purple-600">.container {'{'} width: 100%; {'}'}</p>
-                <p className="mt-3 text-green-600">/* Tablet and up */</p>
-                <p className="text-purple-600">@media (min-width: 768px) {'{'} .container {'{'} width: 750px; {'}'} {'}'}</p>
-                <p className="mt-3 text-green-600">/* Desktop and up */</p>
-                <p className="text-purple-600">@media (min-width: 992px) {'{'} .container {'{'} width: 970px; {'}'} {'}'}</p>
-              </div>
-            </div>
-          </div>
-
-          <InteractiveCodeEditor
-            title="Media Queries Demo"
-            language="html"
-            initialCode={`<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: Arial, sans-serif; padding: 20px; }
-
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .box {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 40px 20px;
-            border-radius: 10px;
-            text-align: center;
-            flex: 1 1 100%;
-        }
-
-        h1 { margin-bottom: 20px; }
-
-        /* Small devices (tablets) */
-        @media (min-width: 576px) {
-            .box { flex: 1 1 45%; }
-        }
-
-        /* Medium devices (laptops) */
-        @media (min-width: 768px) {
-            .box { flex: 1 1 30%; }
-            h1 { color: blue; }
-        }
-
-        /* Large devices (desktops) */
-        @media (min-width: 992px) {
-            .box { flex: 1 1 20%; }
-            h1 { color: green; font-size: 3em; }
-        }
-    </style>
-</head>
-<body>
-    <h1>Resize the window!</h1>
-    <div class="container">
-        <div class="box">Box 1</div>
-        <div class="box">Box 2</div>
-        <div class="box">Box 3</div>
-        <div class="box">Box 4</div>
-    </div>
-</body>
-</html>`}
+    }
+}`}
           />
 
           <Exercise
-            question="Create a responsive layout that shows 1 column on mobile, 2 columns on tablets, and 4 columns on desktop screens."
-            hint="Use media queries with min-width breakpoints at 576px and 992px. Use flexbox with flex-wrap and the flex property."
-            solution="Use @media (min-width: 576px) { } and @media (min-width: 992px) { } to change the flex property from flex: 1 1 100% to flex: 1 1 50% and then flex: 1 1 25%."
+            question="Create an async function that fetches data from a JSON placeholder API (https://jsonplaceholder.typicode.com/posts/1) and returns the post title."
+            hint="Use fetch() to get the data, then .json() to parse it. Use async/await for cleaner syntax. Access the title property from the response."
+            solution={`async function getPostTitle() {
+    try {
+        const response = await fetch('https://jsonplaceholder.typicode.com/posts/1');
+        const post = await response.json();
+        return post.title;
+    } catch (error) {
+        console.error('Failed to fetch post:', error);
+        return null;
+    }
+}
+
+// Or with .then()
+function getPostTitle() {
+    return fetch('https://jsonplaceholder.typicode.com/posts/1')
+        .then(response => response.json())
+        .then(post => post.title)
+        .catch(error => {
+            console.error('Failed to fetch post:', error);
+            return null;
+        });
+}`}
           />
         </div>
       )
     },
 
-    'css-practical-exercise': {
-      id: 'css-practical-exercise',
-      title: 'Practical Exercise: Build a Card Component',
-      icon: <Square className="w-5 h-5" />,
+    'advjs-exercises': {
+      id: 'advjs-exercises',
+      title: 'Practical Project',
+      icon: <Code2 className="w-5 h-5" />,
       content: (
         <div className="space-y-6">
           <div className="prose dark:prose-invert max-w-none">
-            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">Challenge: Create a Responsive Card</h3>
+            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">Build an Interactive To-Do App</h3>
             <p className="text-gray-600 dark:text-gray-400 mb-4">
-              Now let's put everything together! Build a beautiful, responsive card component using all the CSS concepts you've learned.
+              Let's put everything together! Build a fully functional to-do application using DOM manipulation, events, and localStorage.
             </p>
 
-            <div className="bg-gradient-to-r from-indigo-500 to-purple-500 rounded-xl p-6 text-white mb-6">
-              <h4 className="font-bold mb-3">Requirements</h4>
+            <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl p-6 text-white mb-6">
+              <h4 className="font-bold mb-3">Features to Implement</h4>
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                  <span>Card with shadow and rounded corners</span>
+                  <span>Add new todos with input field</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                  <span>Image at the top</span>
+                  <span>Mark todos as complete/incomplete</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                  <span>Title and description</span>
+                  <span>Delete todos</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                  <span>Hover effect with transform</span>
+                  <span>Filter by all/active/completed</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                  <span>Responsive: stack on mobile, row on desktop</span>
+                  <span>Persist data to localStorage</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 mt-0.5 flex-shrink-0" />
+                  <span>Show count of remaining items</span>
                 </li>
               </ul>
             </div>
           </div>
 
           <InteractiveCodeEditor
-            title="Build Your Card Component"
-            language="html"
-            initialCode={`<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #f0f2f5;
-            padding: 40px;
-            min-height: 100vh;
-        }
+            title="To-Do App Project"
+            language="javascript"
+            initialCode={`// HTML Structure
+// <div id="app">
+//   <h1>My To-Do List</h1>
+//   <input type="text" id="todoInput" placeholder="Add a new todo...">
+//   <button id="addBtn">Add</button>
+//   <ul id="todoList"></ul>
+//   <div id="filters">
+//     <button data-filter="all">All</button>
+//     <button data-filter="active">Active</button>
+//     <button data-filter="completed">Completed</button>
+//   </div>
+//   <p id="count">0 items left</p>
+// </div>
 
-        /* Your task: Create the card container */
-        .card-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
+// State
+let todos = JSON.parse(localStorage.getItem('todos')) || [];
+let currentFilter = 'all';
 
-        /* Your task: Style the card */
-        .card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            /* Add transition for hover effect */
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            /* Make it responsive */
-            flex: 1 1 300px;
-            max-width: 300px;
-        }
+// DOM Elements
+const input = document.getElementById('todoInput');
+const addBtn = document.getElementById('addBtn');
+const list = document.getElementById('todoList');
+const count = document.getElementById('count');
 
-        /* Your task: Add hover effect */
-        .card:hover {
-            /* Scale up slightly */
-            /* Add stronger shadow */
-        }
+// Save to localStorage
+function saveTodos() {
+    localStorage.setItem('todos', JSON.stringify(todos));
+}
 
-        /* Your task: Style the image */
-        .card-image {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-        }
+// Render todos
+function render() {
+    const filtered = todos.filter(todo => {
+        if (currentFilter === 'active') return !todo.completed;
+        if (currentFilter === 'completed') return todo.completed;
+        return true;
+    });
 
-        /* Your task: Style the content */
-        .card-content {
-            padding: 20px;
-        }
+    list.innerHTML = filtered.map(todo => \`
+        <li class="\${todo.completed ? 'completed' : ''}">
+            <input type="checkbox"
+                   \${todo.completed ? 'checked' : ''}
+                   data-id="\${todo.id}">
+            <span>\${todo.text}</span>
+            <button data-delete="\${todo.id}">X</button>
+        </li>
+    \`).join('');
 
-        .card-title {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 8px;
-        }
+    updateCount();
+}
 
-        .card-description {
-            color: #666;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
+// Update count
+function updateCount() {
+    const remaining = todos.filter(t => !t.completed).length;
+    count.textContent = \`\${remaining} \${remaining === 1 ? 'item' : 'items'} left\`;
+}
 
-        /* Your task: Style the button */
-        .card-button {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            transition: opacity 0.3s;
-        }
+// Add todo
+function addTodo() {
+    const text = input.value.trim();
+    if (!text) return;
 
-        .card-button:hover {
-            opacity: 0.9;
-        }
-    </style>
-</head>
-<body>
-    <div class="card-container">
-        <div class="card">
-            <img src="https://picsum.photos/300/200?random=1" alt="Random" class="card-image">
-            <div class="card-content">
-                <h3 class="card-title">Card Title</h3>
-                <p class="card-description">This is a description. Add your hover effects to make it interactive!</p>
-                <a href="#" class="card-button">Learn More</a>
-            </div>
-        </div>
+    todos.push({
+        id: Date.now(),
+        text,
+        completed: false
+    });
 
-        <div class="card">
-            <img src="https://picsum.photos/300/200?random=2" alt="Random" class="card-image">
-            <div class="card-content">
-                <h3 class="card-title">Another Card</h3>
-                <p class="card-description">Try adding more cards and see how flexbox handles the layout!</p>
-                <a href="#" class="card-button">Learn More</a>
-            </div>
-        </div>
+    input.value = '';
+    saveTodos();
+    render();
+}
 
-        <div class="card">
-            <img src="https://picsum.photos/300/200?random=3" alt="Random" class="card-image">
-            <div class="card-content">
-                <h3 class="card-title">Third Card</h3>
-                <p class="card-description">Resize the window to see the responsive behavior!</p>
-                <a href="#" class="card-button">Learn More</a>
-            </div>
-        </div>
-    </div>
-</body>
-</html>`}
-          />
+// Toggle todo
+function toggleTodo(id) {
+    const todo = todos.find(t => t.id === id);
+    if (todo) {
+        todo.completed = !todo.completed;
+        saveTodos();
+        render();
+    }
+}
 
-          <Quiz
-            questions={[
-              {
-                question: "Which CSS property creates the shadow around the card?",
-                options: ["border", "outline", "box-shadow", "drop-shadow"],
-                correctAnswer: 2,
-                explanation: "box-shadow creates the shadow effect around an element."
-              },
-              {
-                question: "What makes the card container responsive with flexbox?",
-                options: [
-                  "display: flex only",
-                  "flex-wrap: wrap and flex: 1 1 300px",
-                  "position: relative",
-                  "margin: auto"
-                ],
-                correctAnswer: 1,
-                explanation: "flex-wrap: wrap allows items to wrap, and flex: 1 1 300px makes cards grow/shrink but have a minimum width."
-              }
-            ]}
+// Delete todo
+function deleteTodo(id) {
+    todos = todos.filter(t => t.id !== id);
+    saveTodos();
+    render();
+}
+
+// Event Listeners
+addBtn.addEventListener('click', addTodo);
+input.addEventListener('keypress', e => {
+    if (e.key === 'Enter') addTodo();
+});
+
+list.addEventListener('click', e => {
+    const id = parseInt(e.target.dataset.id || e.target.dataset.delete);
+    if (e.target.type === 'checkbox') toggleTodo(id);
+    if (e.target.dataset.delete !== undefined) deleteTodo(id);
+});
+
+document.querySelectorAll('#filters button').forEach(btn => {
+    btn.addEventListener('click', () => {
+        currentFilter = btn.dataset.filter;
+        document.querySelectorAll('#filters button')
+            .forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        render();
+    });
+});
+
+// Initial render
+render();`}
           />
         </div>
       )
@@ -1366,14 +1322,14 @@ export default function Chapter5({ progress, updateProgress }: Chapter5Props) {
   return (
     <div className="space-y-6">
       {/* Chapter Header */}
-      <div className="bg-gradient-to-r from-pink-600 to-purple-600 rounded-2xl p-6 text-white">
+      <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl p-6 text-white">
         <div className="flex items-center gap-4">
           <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center">
-            <Palette className="w-10 h-10" />
+            <Zap className="w-10 h-10" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold mb-2">Chapter 5: CSS - Styling the Web</h1>
-            <p className="text-white/80">Master CSS selectors, box model, flexbox, grid, animations, and responsive design</p>
+            <h1 className="text-3xl font-bold mb-2">Chapter 5: Advanced JavaScript & jQuery</h1>
+            <p className="text-white/80">Explore DOM manipulation, events, objects, strings, dates, regular expressions, cookies, and jQuery</p>
           </div>
         </div>
         <div className="mt-6 flex flex-wrap gap-4">
@@ -1421,56 +1377,24 @@ export default function Chapter5({ progress, updateProgress }: Chapter5Props) {
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
-                  {topic.exercise && (
-                    <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-600 text-xs rounded-lg">
-                      Exercise
-                    </span>
-                  )}
-                  {topic.quiz && (
-                    <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-600 text-xs rounded-lg">
-                      Quiz
-                    </span>
-                  )}
-                  {isExpanded ? (
-                    <ChevronDown className="w-5 h-5 text-gray-400" />
-                  ) : (
-                    <ChevronRight className="w-5 h-5 text-gray-400" />
-                  )}
+                  {topic.exercise && <span className="px-2 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-600 text-xs rounded-lg">Exercise</span>}
+                  {topic.quiz && <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-600 text-xs rounded-lg">Quiz</span>}
+                  {isExpanded ? <ChevronDown className="w-5 h-5 text-gray-400" /> : <ChevronRight className="w-5 h-5 text-gray-400" />}
                 </div>
               </button>
 
               {isExpanded && (
                 <div className="p-6 pt-0 space-y-6 border-t border-gray-100 dark:border-gray-700">
                   {topic.content}
-
-                  {topic.exercise && (
-                    <div className="mt-6">
-                      {topic.exercise}
-                    </div>
-                  )}
-
-                  {topic.quiz && (
-                    <div className="mt-6">
-                      <Quiz questions={topic.quiz.questions} />
-                    </div>
-                  )}
-
+                  {topic.exercise && <div className="mt-6">{topic.exercise}</div>}
+                  {topic.quiz && <div className="mt-6"><Quiz questions={topic.quiz.questions} /></div>}
                   <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
                     {!isCompleted && (
-                      <button
-                        onClick={() => markComplete(topic.id)}
-                        className="flex items-center gap-2 px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-xl font-medium transition-colors"
-                      >
-                        <CheckCircle className="w-5 h-5" />
-                        Mark as Complete
+                      <button onClick={() => markComplete(topic.id)} className="flex items-center gap-2 px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-xl font-medium transition-colors">
+                        <CheckCircle className="w-5 h-5" /> Mark as Complete
                       </button>
                     )}
-                    {isCompleted && (
-                      <span className="flex items-center gap-2 text-green-600 font-medium">
-                        <CheckCircle className="w-5 h-5" />
-                        Completed
-                      </span>
-                    )}
+                    {isCompleted && <span className="flex items-center gap-2 text-green-600 font-medium"><CheckCircle className="w-5 h-5" /> Completed</span>}
                   </div>
                 </div>
               )}
