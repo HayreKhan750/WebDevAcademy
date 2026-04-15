@@ -171,6 +171,62 @@ echo "Welcome, " . $name;
 </body>
 </html>`}
           />
+
+          <Quiz
+            questions={[
+              {
+                question: "What is the correct PHP opening tag?",
+                options: ["<php>", "<?php", "<script php>", "PHP"],
+                correctAnswer: 1,
+                explanation: "The correct PHP opening tag is <?php. PHP code is enclosed between <?php and ?> tags."
+              },
+              {
+                question: "What symbol is used to define variables in PHP?",
+                options: ["@", "$", "#", "VAR"],
+                correctAnswer: 1,
+                explanation: "Variables in PHP are prefixed with a dollar sign ($), like $variableName."
+              },
+              {
+                question: "Where does PHP code execute?",
+                options: ["In the user's browser", "On the web server", "On the client computer", "In the database"],
+                correctAnswer: 1,
+                explanation: "PHP is a server-side language, meaning the code executes on the web server before sending results to the browser."
+              }
+            ]}
+          />
+
+          <Exercise
+            question="Create a PHP script that declares variables of different data types (string, integer, float, boolean) and displays each one. Use echo to output the values."
+            hint="Use $ to declare variables, and remember PHP is loosely typed - you don't need to specify types"
+            solution={`<?php
+$name = "Web Developer";
+echo "Name: " . $name . "<br>";
+
+$age = 25;
+echo "Age: " . $age . "<br>";
+
+$price = 19.99;
+echo "Price: $" . $price . "<br>";
+
+$is_student = true;
+echo "Is Student: " . ($is_student ? "Yes" : "No") . "<br>";
+
+echo "<br>Type checking:<br>";
+echo gettype($name) . "<br>";
+echo gettype($age) . "<br>";
+echo gettype($price) . "<br>";
+echo gettype($is_student) . "<br>";
+?>`}
+            validationCode={`const code = {answer}.toLowerCase();
+const hasPhpTag = code.includes('<?php') || code.includes('php');
+const hasDollar = code.includes('$');
+const hasEcho = code.includes('echo');
+const hasString = code.includes('"') || code.includes("'");
+const hasInteger = /\d+/.test({answer}) && !code.includes('.');
+const hasFloat = code.includes('.') && /\d/.test({answer});
+const hasBoolean = code.includes('true') || code.includes('false');
+return hasPhpTag && hasDollar && hasEcho && hasString && hasInteger && hasFloat && hasBoolean;`}
+          />
         </div>
       )
     },
@@ -299,6 +355,35 @@ echo "Welcome, " . $name;
                 explanation: "PHP uses the dot (.) operator for string concatenation."
               }
             ]}
+          />
+
+          <Exercise
+            question="Create a PHP script that demonstrates variable usage with all basic data types. Include:\n1. A string variable with your name\n2. An integer variable with your age\n3. A float variable with a product price\n4. A boolean variable indicating if you're a student\n5. Output all variables using echo, showing both the value and its type using gettype()"
+            hint="Use gettype() function to check and display the data type of each variable"
+            solution={`<?php
+// String variable
+$name = "Ahmed Khan";
+echo "Name: " . $name . " (Type: " . gettype($name) . ")<br>";
+
+// Integer variable
+$age = 28;
+echo "Age: " . $age . " (Type: " . gettype($age) . ")<br>";
+
+// Float variable
+$price = 49.99;
+echo "Price: $" . $price . " (Type: " . gettype($price) . ")<br>";
+
+// Boolean variable
+$is_student = true;
+echo "Student Status: " . ($is_student ? "Yes" : "No") . " (Type: " . gettype($is_student) . ")<br>";
+
+// Using variable interpolation
+echo "<br>Using interpolation: I am $name and I am $age years old.<br>";
+
+// Changing variable type (PHP is loosely typed)
+$price = "Fifty dollars";
+echo "Price changed to: " . $price . " (Type: " . gettype($price) . ")<br>";
+?>`}
           />
         </div>
       )
@@ -455,6 +540,33 @@ echo "Welcome, " . $name;
     </div>
 </body>
 </html>`}
+          />
+
+          <Exercise
+            question="Create a PHP calculator using operators. Take two numbers ($a = 15, $b = 4) and perform all arithmetic operations (addition, subtraction, multiplication, division, modulus, and power). Display the results clearly."
+            hint="Use arithmetic operators: +, -, *, /, %, and ** for power"
+            solution={`<?php
+$a = 15;
+$b = 4;
+
+echo "Calculator Demo:<br>";
+echo "================<br><br>";
+echo "Numbers: $a and $b<br><br>";
+
+echo "Addition: $a + $b = " . ($a + $b) . "<br>";
+echo "Subtraction: $a - $b = " . ($a - $b) . "<br>";
+echo "Multiplication: $a * $b = " . ($a * $b) . "<br>";
+echo "Division: $a / $b = " . ($a / $b) . "<br>";
+echo "Modulus: $a % $b = " . ($a % $b) . "<br>";
+echo "Power: $a ** $b = " . ($a ** $b) . "<br><br>";
+
+// Comparison example
+echo "Comparison:<br>";
+echo "15 == '15': " . (15 == '15' ? 'true' : 'false') . "<br>";
+echo "15 === '15': " . (15 === '15' ? 'true' : 'false') . "<br>";
+echo "15 > 4: " . (15 > 4 ? 'true' : 'false') . "<br>";
+echo "Spaceship (15 <=> 4): " . (15 <=> 4) . "<br>";
+?>`}
           />
         </div>
       )

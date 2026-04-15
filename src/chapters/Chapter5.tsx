@@ -953,6 +953,38 @@ window.addEventListener('storage', (e) => {
               }
             ]}
           />
+
+          <Exercise
+            question="Create a function called 'rememberTheme' that: 1) Accepts a theme preference ('light' or 'dark'), 2) Stores it in localStorage with key 'theme', 3) Creates a cookie with the same value that expires in 30 days, 4) Returns an object with both the localStorage and cookie status."
+            hint="Use localStorage.setItem() for storage and document.cookie for cookies with proper expiration"
+            solution={`function rememberTheme(theme) {
+    // Validate theme
+    if (theme !== 'light' && theme !== 'dark') {
+        return { error: 'Invalid theme. Use "light" or "dark".' };
+    }
+
+    // Store in localStorage
+    localStorage.setItem('theme', theme);
+    const localStatus = 'Theme saved to localStorage';
+
+    // Create cookie with 30-day expiration
+    const expires = new Date();
+    expires.setTime(expires.getTime() + (30 * 24 * 60 * 60 * 1000));
+    document.cookie = \`theme=\${theme};expires=\${expires.toUTCString()};path=/\`;
+    const cookieStatus = 'Cookie set for 30 days';
+
+    // Return status object
+    return {
+        theme: theme,
+        localStorage: localStatus,
+        cookie: cookieStatus
+    };
+}
+
+// Usage:
+console.log(rememberTheme('dark'));
+// { theme: 'dark', localStorage: 'Theme saved to localStorage', cookie: 'Cookie set for 30 days' }`}
+          />
         </div>
       )
     },
@@ -1116,6 +1148,43 @@ $.post('/api/submit', { name: 'John' }, function(response) {
                 explanation: "$(document).ready() waits until the DOM is fully loaded before executing the code inside, preventing errors from missing elements."
               }
             ]}
+          />
+
+          <Exercise
+            question="Write jQuery code that: 1) Waits for the DOM to be ready, 2) Selects all paragraphs with class 'intro', 3) Changes their text to 'Welcome!', 4) Adds a 'highlight' class to them, 5) Attaches a click handler that logs 'Clicked!' to the console."
+            hint="Use $(document).ready(), .text(), .addClass(), and .click() or .on('click') methods"
+            solution={`$(document).ready(function() {
+    // Select all paragraphs with class 'intro'
+    const $introParagraphs = $('p.intro');
+
+    // Change text to 'Welcome!'
+    $introParagraphs.text('Welcome!');
+
+    // Add 'highlight' class
+    $introParagraphs.addClass('highlight');
+
+    // Attach click handler
+    $introParagraphs.on('click', function() {
+        console.log('Clicked!');
+    });
+
+    // Alternative: Using each() for individual handling
+    $introParagraphs.each(function() {
+        $(this).on('click', function() {
+            console.log('Clicked!');
+        });
+    });
+});
+
+// Shorthand syntax (same effect)
+$(function() {
+    $('p.intro')
+        .text('Welcome!')
+        .addClass('highlight')
+        .on('click', function() {
+            console.log('Clicked!');
+        });
+});`}
           />
         </div>
       )
@@ -1290,6 +1359,29 @@ function getPostTitle() {
             return null;
         });
 }`}
+          />
+
+          <Quiz
+            questions={[
+              {
+                question: "What does the Fetch API return?",
+                options: ["The response data directly", "A Promise that resolves to a Response object", "XML data", "An error if the request fails"],
+                correctAnswer: 1,
+                explanation: "fetch() returns a Promise that resolves to a Response object. You need to call .json() to parse the response body."
+              },
+              {
+                question: "What is the purpose of 'await' in async functions?",
+                options: ["It creates a new Promise", "It pauses execution until the Promise resolves", "It cancels the request", "It converts data to JSON"],
+                correctAnswer: 1,
+                explanation: "await pauses the async function execution until the Promise resolves, making asynchronous code read like synchronous code."
+              },
+              {
+                question: "How do you handle errors in async/await?",
+                options: ["Using .catch() only", "Using try/catch blocks", "Using if/else statements", "Errors cannot be handled"],
+                correctAnswer: 1,
+                explanation: "Use try/catch blocks to handle errors in async/await functions. The catch block receives any rejected Promise."
+              }
+            ]}
           />
         </div>
       )

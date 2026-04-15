@@ -326,18 +326,26 @@ console.log(\`Hello, \${firstName} \${lastName}!\`);`}
           <Exercise
             question="Calculate and print: 1) The area of a circle with radius 7 (use PI * r^2), 2) Check if 10 is greater than 5, 3) Use a ternary operator to check if a number is positive or negative"
             hint="Use Math.PI for PI and Math.pow() or ** for exponentiation"
-            solution={`// Circle area
-let radius = 7;
+            solution={`let radius = 7;
 let area = Math.PI * radius ** 2;
 console.log("Area:", area);
 
-// Comparison
 console.log("10 > 5:", 10 > 5);
 
-// Ternary
 let number = -5;
 let result = number >= 0 ? "Positive" : "Negative";
 console.log("Number is:", result);`}
+            validationCode={`const code = {answer}.toLowerCase();
+const hasRadius = code.includes('radius');
+const hasArea = code.includes('area');
+const hasPi = code.includes('math.pi');
+const hasSeven = code.includes('7');
+const hasExponent = code.includes('**');
+const hasConsole = code.includes('console.log');
+const hasTernary = code.includes('?') && code.includes(':');
+const hasPositive = code.includes('positive');
+const hasNegative = code.includes('negative');
+return hasRadius && hasArea && hasPi && hasSeven && hasExponent && hasConsole && hasTernary && hasPositive && hasNegative;`}
           />
 
           <Quiz

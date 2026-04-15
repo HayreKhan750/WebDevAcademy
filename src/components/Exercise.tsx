@@ -5,7 +5,9 @@ interface ExerciseProps {
   question: string;
   hint?: string;
   solution?: string;
-  validationCode?: string;
+  validationCode?: string; // Custom JavaScript validation code
+  acceptedAnswers?: string[]; // Multiple accepted answers (fuzzy matched)
+  requiredKeywords?: string[]; // Important concepts that should be in the answer
   onComplete?: () => void;
 }
 
@@ -14,6 +16,8 @@ export default function Exercise({
   hint,
   solution,
   validationCode,
+  acceptedAnswers,
+  requiredKeywords,
   onComplete
 }: ExerciseProps) {
   const [userAnswer, setUserAnswer] = useState('');
@@ -21,21 +25,160 @@ export default function Exercise({
   const [showSolution, setShowSolution] = useState(false);
   const [result, setResult] = useState<'correct' | 'incorrect' | null>(null);
 
+  // Remove comments from code for validation
+  const removeComments = (code: string): string => {
+    // Remove single-line comments (// and #)
+    let result = code.replace(/\/\/.*$/gm, '');
+    result = result.replace(/#.*$/gm, '');
+    // Remove multi-line comments (/* */)
+    result = result.replace(/\/\*[\s\S]*?\*\//g, '');
+    // Remove HTML comments
+    result = result.replace(/<!--[\s\S]*?-->/g, '');
+    return result;
+  };
+
+  // Normalize text for comparison - remove extra whitespace and punctuation
+  const normalizeText = (text: string): string => {
+    return text.trim()
+      .toLowerCase()
+      .replace(/\s+/g, ' ')
+      .replace(/[.,!?;:'"()[\]{}]/g, '')
+      .replace(/<[^>]*>/g, '')
+      .replace(/[']/g, '');
+  };
+
+  // Calculate Levenshtein distance for fuzzy matching
+  const levenshteinDistance = (str1: string, str2: string): number => {
+    const m = str1.length;
+    const n = str2.length;
+    const dp: number[][] = Array(m + 1).fill(null).map(() => Array(n + 1).fill(0));
+
+    for (let i = 0; i <= m; i++) dp[i][0] = i;
+    for (let j = 0; j <= n; j++) dp[0][j] = j;
+
+    for (let i = 1; i <= m; i++) {
+      for (let j = 1; j <= n; j++) {
+        if (str1[i - 1] === str2[j - 1]) {
+          dp[i][j] = dp[i - 1][j - 1];
+        } else {
+          dp[i][j] = Math.min(dp[i - 1][j - 1], dp[i - 1][j], dp[i][j - 1]) + 1;
+        }
+      }
+    }
+    return dp[m][n];
+  };
+
+  // Calculate similarity percentage (0-100)
+  const calculateSimilarity = (str1: string, str2: string): number => {
+    if (str1 === str2) return 100;
+    if (str1.length === 0 || str2.length === 0) return 0;
+
+    const distance = levenshteinDistance(str1, str2);
+    const maxLen = Math.max(str1.length, str2.length);
+    return Math.round((1 - distance / maxLen) * 100);
+  };
+
+  // Check if answer contains required concepts (keyword-based with 75% match)
+  const checkKeywordsPresent = (answer: string, keywords: string[]): boolean => {
+    if (keywords.length === 0) return true;
+
+    const normalizedAnswer = normalizeText(answer);
+    const answerWords = normalizedAnswer.split(' ').filter(w => w.length > 0);
+
+    let matchedKeywords = 0;
+
+    for (const keyword of keywords) {
+      const normalizedKeyword = normalizeText(keyword);
+      let found = false;
+
+      for (const word of answerWords) {
+        if (word === normalizedKeyword ||
+            word.includes(normalizedKeyword) ||
+            normalizedKeyword.includes(word)) {
+          found = true;
+          break;
+        }
+      }
+
+      if (found) {
+        matchedKeywords++;
+      }
+    }
+
+    const matchPercentage = (matchedKeywords / keywords.length) * 100;
+    return matchPercentage >= 75;
+  };
+
+  // Check against multiple accepted answers (fuzzy match - 80% similarity)
+  const checkAcceptedAnswers = (answer: string, accepted: string[]): boolean => {
+    const normalizedAnswer = normalizeText(answer);
+
+    for (const acceptedAnswer of accepted) {
+      const normalizedAccepted = normalizeText(acceptedAnswer);
+
+      if (normalizedAnswer === normalizedAccepted) {
+        return true;
+      }
+
+      const similarity = calculateSimilarity(normalizedAnswer, normalizedAccepted);
+      if (similarity >= 80) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  // Validate code structure - ignores comments
+  const validateCode = (userCode: string, validationFn: string): boolean => {
+    try {
+      // Remove comments from user code
+      const cleanCode = removeComments(userCode);
+      const safeCode = cleanCode.replace(/"/g, '\\"').replace(/`/g, '\\`');
+      const code = validationFn.replace('{answer}', `"${safeCode}"`);
+      return new Function(code)();
+    } catch {
+      return false;
+    }
+  };
+
+  // Check if code contains required elements (comments are ignored)
+  const checkCodeStructure = (userCode: string, requiredElements: string[]): boolean => {
+    // Remove comments first
+    const cleanCode = removeComments(userCode).toLowerCase();
+
+    for (const element of requiredElements) {
+      if (!cleanCode.includes(element.toLowerCase())) {
+        return false;
+      }
+    }
+    return true;
+  };
+
   const checkAnswer = () => {
-    if (!validationCode) {
-      setResult('correct');
-      onComplete?.();
+    if (!userAnswer.trim()) {
+      setResult('incorrect');
       return;
     }
 
-    try {
-      const isCorrect = new Function(validationCode.replace('{answer}', `"${userAnswer}"`))();
-      setResult(isCorrect ? 'correct' : 'incorrect');
-      if (isCorrect) {
-        onComplete?.();
-      }
-    } catch {
-      setResult('incorrect');
+    let isCorrect = false;
+
+    if (validationCode) {
+      // Code validation - removes comments before checking
+      isCorrect = validateCode(userAnswer, validationCode);
+    } else if (acceptedAnswers && acceptedAnswers.length > 0) {
+      isCorrect = checkAcceptedAnswers(userAnswer, acceptedAnswers);
+    } else if (requiredKeywords && requiredKeywords.length > 0) {
+      isCorrect = checkKeywordsPresent(userAnswer, requiredKeywords);
+    } else if (solution) {
+      // For code exercises without validationCode, check structural elements
+      isCorrect = checkAcceptedAnswers(userAnswer, [solution]);
+    } else {
+      isCorrect = false;
+    }
+
+    setResult(isCorrect ? 'correct' : 'incorrect');
+    if (isCorrect) {
+      onComplete?.();
     }
   };
 

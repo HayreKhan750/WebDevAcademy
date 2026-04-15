@@ -280,6 +280,16 @@ export default function Chapter1({ progress, updateProgress }: Chapter1Props) {
               }
             ]}
           />
+
+          <Exercise
+            question="Explain what happens when you type 'https://www.google.com' in your browser. Walk through the complete process from DNS lookup to displaying the page."
+            hint="Think about the steps: DNS resolution, TCP connection, HTTP request, server processing, HTTP response, and browser rendering"
+            solution="1. Browser checks local cache for IP address\n2. If not found, browser queries DNS server for www.google.com\n3. DNS returns IP address (e.g., 142.250.185.206)\n4. Browser establishes TCP connection on port 443 (HTTPS)\n5. Browser sends HTTP GET request for the homepage\n6. Server processes request and returns HTML, CSS, JS files\n7. Browser renders the content and displays the page"
+            acceptedAnswers={[
+              "dns lookup, ip address, tcp connection, http request, server response, browser rendering",
+              "browser checks cache, dns query, ip address returned, tcp connection established, http get request, server processes, html response, browser renders page"
+            ]}
+          />
         </div>
       )
     },
@@ -383,6 +393,17 @@ export default function Chapter1({ progress, updateProgress }: Chapter1Props) {
               }
             ]}
           />
+
+          <Exercise
+            question="If you're building a video streaming application where speed is critical but some data loss is acceptable, which protocol would you choose between TCP and UDP? Explain your reasoning."
+            hint="Think about the characteristics: reliability vs speed, guaranteed delivery vs faster transmission"
+            solution="UDP would be better for video streaming because:\n1. UDP is faster - it doesn't wait for acknowledgments or retransmit lost packets\n2. For video streaming, slightly lost data (a few dropped frames) is acceptable\n3. TCP's reliability features would add latency that degrades the streaming experience\n4. Real-time protocols like RTSP, RTMP use UDP under the hood for this reason"
+            acceptedAnswers={[
+              "udp is faster and better for video streaming because speed is critical and some data loss is acceptable tcp would add latency",
+              "i would choose udp because it is connectionless and faster tcp adds latency and is for reliable delivery video streaming needs speed",
+              "udp because it provides faster transmission without guaranteed delivery which is acceptable for video streaming tcp reliability adds latency"
+            ]}
+          />
         </div>
       )
     },
@@ -473,6 +494,12 @@ console.log("Server: Apache/2.4"`}
                 explanation: "HTTP is stateless - each request is independent and the server doesn't maintain session state."
               }
             ]}
+          />
+
+          <Exercise
+            question="You need to design an API for a blog application. Define which HTTP methods you would use for each of these operations and explain your choices:\n1. Getting a list of all blog posts\n2. Creating a new blog post\n3. Updating an existing post\n4. Deleting a post\n5. Getting a single post by ID"
+            hint="Think about CRUD operations (Create, Read, Update, Delete) and which HTTP methods correspond to each"
+            solution="1. GET /posts - Retrieve all posts (Read operation)\n2. POST /posts - Create new post (Create operation)\n3. PUT /posts/:id or PATCH /posts/:id - Update existing post (Update operation)\n4. DELETE /posts/:id - Delete a post (Delete operation)\n5. GET /posts/:id - Retrieve single post (Read operation)\n\nHTTP Methods Map:\n- GET = Read\n- POST = Create\n- PUT = Full Update\n- PATCH = Partial Update\n- DELETE = Delete"
           />
         </div>
       )
@@ -598,6 +625,16 @@ console.log("Server: Apache/2.4"`}
                 correctAnswer: 0,
                 explanation: "HTTP uses port 80 by default, while HTTPS uses port 443. These well-known ports are reserved for web traffic."
               }
+            ]}
+          />
+
+          <Exercise
+            question="Break down this URL into its components and explain each part:\nhttps://api.example.com:8443/users/profile?id=123&tab=activity"
+            hint="Look for: protocol, subdomain, domain, TLD, port, path, query parameters"
+            solution="Components breakdown:\n1. Protocol: https - The secure version of HTTP\n2. Subdomain: api - Indicates this is an API server\n3. Domain: example - The registered domain name\n4. TLD: .com - Top-level domain\n5. Port: 8443 - Non-standard HTTPS port (commonly used for alternative SSL)\n6. Path: /users/profile - Resource location on the server\n7. Query String: ?id=123&tab=activity\n   - id=123: Parameter named 'id' with value '123'\n   - tab=activity: Parameter named 'tab' with value 'activity'\n   - & separates multiple parameters"
+            acceptedAnswers={[
+              "protocol https, subdomain api, domain example, tld com, port 8443, path users profile, query id and tab",
+              "https is protocol, api is subdomain, example is domain, com is tld, 8443 is port, users profile is path, id and tab are query parameters"
             ]}
           />
         </div>
@@ -882,6 +919,12 @@ console.log("Server: Apache/2.4"`}
                 explanation: "HTTPS uses SSL/TLS to encrypt data transmitted between the browser and server, protecting against eavesdropping and tampering."
               }
             ]}
+          />
+
+          <Exercise
+            question="A user enters their name in a login form: 'admin' OR '1'='1'. Explain what this input could do if the application is vulnerable to SQL injection, and how you would prevent such attacks."
+            hint="Think about how this input could manipulate the SQL query logic to bypass authentication"
+            solution="This is a classic SQL injection attack!\n\nIf vulnerable code is:\nSELECT * FROM users WHERE username = 'input' AND password = 'pass'\n\nThe input 'admin' OR '1'='1' would become:\nSELECT * FROM users WHERE username = 'admin' OR '1'='1' AND password = 'pass'\n\nSince '1'='1' is always true, this bypasses authentication!\n\nPrevention Methods:\n1. Use Parameterized Queries (Prepared Statements):\n   $stmt = $pdo->prepare('SELECT * FROM users WHERE username = ?');\n   $stmt->execute([$input]);\n\n2. Input Validation - reject suspicious patterns like quotes, semicolons\n3. Use ORM frameworks that handle escaping automatically\n4. Apply principle of least privilege to database users\n5. Escape special characters in user input"
           />
         </div>
       )
